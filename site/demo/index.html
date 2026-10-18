@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live demo, generate a shelter design brief</title>
+<meta name="description" content="Enter coordinates or pick a high-risk city, choose a building code, and get a plain-language, code-cited shelter design brief. Runs in your browser; nothing uploaded.">
+<meta property="og:title" content="Live demo, generate a shelter design brief">
+<meta property="og:description" content="Enter coordinates or pick a high-risk city, choose a building code, and get a plain-language, code-cited shelter design brief. Runs in your browser; nothing uploaded.">
+<meta property="og:url" content="https://manyaai.github.io/openshelter/demo/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://manyaai.github.io/openshelter/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6e66">
+<link rel="canonical" href="https://manyaai.github.io/openshelter/demo/">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="../css/inter.css"></noscript>
+<script>if(!CSS.supports||!CSS.supports('font-family','Inter')){document.write('<link rel="stylesheet" href="../css/fonts.css">')}</script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dark.css">
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="../index.html">Home</a>
+    <a href="../how/">How it works</a>
+    <a href="../demo/" class="active" aria-current="page">Live demo</a>
+    <a href="../briefs/">Example plans</a>
+    <a href="../trust/">Trust & data</a>
+    <a href="../news/">Newsroom</a>
+    <a href="../mission/">Mission</a>
+    <a href="../contribute/">Get involved</a>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a></span>
+  </nav>
+</div></header>
+<nav class="crumbs" aria-label="Breadcrumb"><div class="wrap"><a href="../index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Live demo</span></div></nav>
+<main id="main">
+
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Try it now</span><h1>Generate a shelter design brief, right in your browser</h1>
+  <p class="lead">Pick a famous high-risk site or type any coordinates. The tool reads real earthquake and cyclone data, applies the building code you choose, and prints a plain-language brief where every recommendation cites its source. Nothing is uploaded; this runs entirely on your device.</p>
+</div></section>
+<div class="wrap">
+<section class="tight"><div class="wrap"><div class="card demo-card">
+  <h2>Generate a design brief, in your browser, right now</h2>
+  <p class="hint" id="datastatus">Loading hazard data…</p>
+  <form class="demo" id="f">
+    <div class="fld" style="grid-column:1/-1"><label for="preset">Pick a famous high-risk site (auto-generates)</label>
+      <select id="preset">
+        <option value="">- or enter coordinates manually below -</option>
+        <option value="23.81,90.41">Dhaka, Bangladesh, flood / cyclone / heat</option>
+        <option value="14.60,120.98">Manila, Philippines, typhoon / earthquake</option>
+        <option value="41.01,28.98">Istanbul, Türkiye, earthquake</option>
+        <option value="18.54,-72.26">Port-au-Prince, Haiti, earthquake / hurricane</option>
+        <option value="21.43,92.01">Cox's Bazar, Bangladesh, cyclone / landslide</option>
+        <option value="19.43,-99.13">Mexico City, Mexico, seismic</option>
+        <option value="35.68,139.65">Tokyo, Japan, earthquake / typhoon</option>
+        <option value="-19.83,34.86">Beira, Mozambique, cyclone / flood</option>
+        <option value="-18.12,178.45">Suva, Fiji, cyclone / sea-level rise</option>
+        <option value="-6.21,106.85">Jakarta, Indonesia, earthquake / flood</option>
+      </select></div>
+    <div class="fld"><label for="lat">Latitude</label><input id="lat" type="number" step="0.01" min="-90" max="90" value="23.81" required></div>
+    <div class="fld"><label for="lon">Longitude</label><input id="lon" type="number" step="0.01" min="-180" max="180" value="90.39" required></div>
+    <div class="fld"><label for="code">Building code profile</label><select id="code">
+        <option value="in-is139-is4352">India, IS 139 / IS 4352</option>
+        <option value="eu-eurocode-8">EU, Eurocode 8</option>
+        <option value="us-iebc">USA, IBC / ASCE 7</option>
+        <option value="ph-nscc">Philippines, NSCP</option>
+        <option value="sphere-humanitarian">Sphere humanitarian standards</option>
+      </select></div>
+    <div class="fld"><label for="pop">People sheltered</label><input id="pop" type="number" min="0" value="5000"></div>
+    <div class="fld"><label for="water">Distance to river/coast (m)</label><input id="water" type="number" min="0" value="5000"></div>
+    <button class="go" type="submit">Generate design brief</button>
+  </form>
+  <div id="out" aria-live="polite"></div>
+  <div class="disclaimer"><b>Honesty policy.</b> Earthquake &amp; cyclone scores come from real public-domain data (USGS ComCat M6.0+ 1990-2026; NOAA IBTrACS climatology). Flood, heat, drought and landslide values are labelled demo placeholders until national agencies contribute authoritative layers. OpenShelter produces pre-design guidance, not stamped engineering, a licensed local engineer must verify structural calculations before construction.</div>
+</div></div></section>
+</div>
+
+<nav class="pager" aria-label="Page navigation"><div class="wrap grid grid-2"><a class="pg prev" href="../how/"><small>&larr; Previous</small><b>How it works</b></a><a class="pg next" href="../briefs/"><small>Next &rarr;</small><b>Example plans</b></a></div></nav>
+</main>
+<footer class="site"><div class="wrap">
+  <div class="grid">
+    <div><h4>OpenShelter</h4><p class="f-tag">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p>
+      <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
+      <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
+      <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
+    <div><h4>Explore</h4><a href="../how/">How it works</a><a href="../demo/">Live demo</a><a href="../briefs/">Example plans</a><a href="../trust/">Trust &amp; data</a><a href="../news/">Newsroom</a></div>
+    <div><h4>About</h4><a href="../mission/">Mission &amp; story</a><a href="../contribute/">Get involved</a><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
+    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
+
+  </div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
+</div></footer>
+<button class="totop" aria-label="Back to top">↑</button>
+<script src="../js/ui.js"></script>
+<script src="../briefgen.js"></script>
+<script src="../js/demo.js"></script>
+</body>
+</html>

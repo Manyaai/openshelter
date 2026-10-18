@@ -10,3 +10,13 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: pytest -q
       - run: openshelter brief --lat 23.81 --lon 90.39 --code in-is139-is4352 --outdir out
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python tools/build_site.py
+      - run: python tools/check_links.py
+      - name: Fail if build output differs from committed site
+        run: git diff --exit-code -- site/ || (echo "site/ is stale; run: python tools/build_site.py and commit"; exit 1)

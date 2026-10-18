@@ -17,16 +17,23 @@ SITE = ROOT / "site"
 NAV = [
     ("Home", "/index.html"),
     ("How it works", "/how/"),
+    ("Live demo", "/demo/"),
     ("Example plans", "/briefs/"),
-    ("Data & trust", "/trust/"),
+    ("Trust & data", "/trust/"),
+    ("Newsroom", "/news/"),
     ("Mission", "/mission/"),
-    ("Contribute", "/contribute/"),
+    ("Get involved", "/contribute/"),
 ]
 ACTIVE_KEY = {  # page id -> nav label that should be marked active
-    "home": "Home", "how": "How it works",
-    "briefs": "Example plans", "trust": "Data & trust",
-    "mission": "Mission", "contribute": "Contribute",
+    "home": "Home", "how": "How it works", "demo": "Live demo",
+    "briefs": "Example plans", "trust": "Trust & data", "news": "Newsroom",
+    "mission": "Mission", "contribute": "Get involved",
 }
+# pager order for prev/next navigation cards at the bottom of sub-pages
+PAGER_ORDER = ["how", "demo", "briefs", "trust", "news", "mission", "contribute"]
+PAGER_HREF = {"how": "how/", "demo": "demo/", "briefs": "briefs/", "trust": "trust/",
+              "news": "news/", "mission": "mission/", "contribute": "contribute/"}
+PAGER_TITLE = {k: lbl for k, lbl in zip(PAGER_ORDER, [l for l, _ in NAV[1:]])}
 
 def rel(prefix: str, path: str) -> str:
     """Resolve an absolute site path relative to a page directory prefix."""
@@ -40,12 +47,41 @@ FOOTER_COLS = """
       <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
       <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
       <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
-    <div><h4>Explore</h4><a href="{URL}briefs/">Example plans</a><a href="{URL}how/">How it works</a><a href="{URL}trust/">Trust &amp; data</a><a href="{URL}mission/">Mission</a><a href="{URL}contribute/">Get involved</a></div>
-    <div><h4>Use it</h4><a href="{URL}index.html#demo">Try the live demo</a><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
+    <div><h4>Explore</h4><a href="{URL}how/">How it works</a><a href="{URL}demo/">Live demo</a><a href="{URL}briefs/">Example plans</a><a href="{URL}trust/">Trust &amp; data</a><a href="{URL}news/">Newsroom</a></div>
+    <div><h4>About</h4><a href="{URL}mission/">Mission &amp; story</a><a href="{URL}contribute/">Get involved</a><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
     <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
 """
 
 REPO = "https://github.com/Manyaai/openshelter"
+
+def crumbs(page_id: str, p: str) -> str:
+    """Breadcrumb trail for sub-pages (Home / <current section>)."""
+    if page_id == "home":
+        return ""
+    label = ACTIVE_KEY.get(page_id, page_id.title())
+    return (f'<nav class="crumbs" aria-label="Breadcrumb"><div class="wrap">'
+            f'<a href="{p}index.html">Home</a><span aria-hidden="true">/</span>'
+            f'<span aria-current="page">{label}</span></div></nav>')
+
+
+def pager(page_id: str, p: str) -> str:
+    """Previous / next navigation cards at the bottom of every sub-page."""
+    if page_id == "home" or page_id not in PAGER_ORDER:
+        return ""
+    i = PAGER_ORDER.index(page_id)
+    prev_id = PAGER_ORDER[i - 1] if i > 0 else None
+    next_id = PAGER_ORDER[i + 1] if i + 1 < len(PAGER_ORDER) else None
+    cells = []
+    if prev_id:
+        cells.append(f'<a class="pg prev" href="{p}{PAGER_HREF[prev_id]}"><small>&larr; Previous</small><b>{PAGER_TITLE[prev_id]}</b></a>')
+    else:
+        cells.append(f'<a class="pg prev" href="{p}index.html"><small>&larr; Start from</small><b>Home</b></a>')
+    if next_id:
+        cells.append(f'<a class="pg next" href="{p}{PAGER_HREF[next_id]}"><small>Next &rarr;</small><b>{PAGER_TITLE[next_id]}</b></a>')
+    else:
+        cells.append(f'<a class="pg next" href="{REPO}"><small>See the code</small><b>GitHub</b></a>')
+    return f'<nav class="pager" aria-label="Page navigation"><div class="wrap grid grid-2">{"".join(cells)}</div></nav>'
+
 
 def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
            canonical: str, extra_head: str = "", scripts: str = "") -> str:
@@ -83,7 +119,6 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 {extra_head}
 </head>
 <body>
-<main id="main">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap">
   <a class="brand" href="{p}index.html"><img src="{p}logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
@@ -94,7 +129,10 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
     <a class="btn-nav" href="{REPO}">GitHub ★</a></span>
   </nav>
 </div></header>
+{crumbs(page_id, p)}
+<main id="main">
 {body}
+{pager(page_id, p)}
 </main>
 <footer class="site"><div class="wrap">
   <div class="grid">{footer}
@@ -114,7 +152,7 @@ HERO = """
   <h1>Every community deserves a shelter designed for <em>its</em> hazards.</h1>
   <p class="lead">OpenShelter turns public hazard data and published building codes into plain-language, printable design briefs, where <b>every recommendation cites the clause and the measurement behind it.</b> No black boxes. No fees. No vendor lock-in.</p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="#demo">Try the live demo →</a>
+    <a class="btn btn-primary" href="demo/">Try the live demo →</a>
     <a class="btn btn-outline" href="briefs/">See example briefs</a>
   </div>
   <div class="trust-row">
@@ -219,7 +257,7 @@ HOW_BODY = """
     <tr><td>Hazard data</td><td>Public-domain grids (USGS, NOAA); raster interface ready</td><td>No licence fees, no vendor lock-in, ever</td></tr>
     <tr><td>This website</td><td>Static HTML generated by <code>tools/build_site.py</code></td><td>No framework, no build service to break, hosts anywhere</td></tr>
   </table></div>
-  <p style="margin-top:var(--s3)"><a class="btn btn-primary" href="index.html#demo">Try it now →</a>&nbsp;&nbsp;<a class="btn btn-outline btn-sm" href="../trust/">See data provenance</a></p>
+  <p style="margin-top:var(--s3)"><a class="btn btn-primary" href="../demo/">Try it now →</a>&nbsp;&nbsp;<a class="btn btn-outline btn-sm" href="../trust/">See data provenance</a></p>
 </div></section>
 """
 
@@ -356,7 +394,7 @@ MISSION_BODY = """
   </ul>
   </div>
 
-  <p style="margin-top:var(--s4)"><a class="btn btn-primary" href="../index.html#demo">Try the live demo →</a>&nbsp;&nbsp;<a class="btn btn-outline" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Partner with us / funding pathways</a></p>
+  <p style="margin-top:var(--s4)"><a class="btn btn-primary" href="../demo/">Try the live demo →</a>&nbsp;&nbsp;<a class="btn btn-outline" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Partner with us / funding pathways</a></p>
 </main></div>
 """
 
@@ -373,7 +411,7 @@ def briefs_body() -> str:
     cards = []
     for fname, (name, dom, prof) in meta.items():
         cards.append(f'''    <div class="card tile"><h3>{name}</h3><p><span class="badge p1">{dom}</span><br>{prof}<br><a href="{fname}">Open printable brief →</a></p></div>''')
-    cards.append('''    <div class="card tile" style="border-style:dashed"><h3>➕ Want your city here?</h3><p>Run the <a href="../index.html#demo">live demo</a> or contribute your country's code profile, gallery entries are generated by CI from the same engine.<br><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contributing guide →</a></p></div>''')
+    cards.append('''    <div class="card tile" style="border-style:dashed"><h3>➕ Want your city here?</h3><p>Run the <a href="../demo/">live demo</a> or contribute your country's code profile, gallery entries are generated by CI from the same engine.<br><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contributing guide →</a></p></div>''')
     return f"""
 <section class="page-head"><div class="wrap measure-narrow">
   <span class="kicker">Proof, not promises</span><h1>Sample design briefs</h1>
@@ -382,7 +420,55 @@ def briefs_body() -> str:
 <section class="tight"><div class="wrap"><div class="grid grid-2">
 {chr(10).join(cards)}
 </div>
-<p class="hint" style="margin-top:var(--s3)">Note: these gallery briefs were generated with v0.1's labelled synthetic hazard field; the <a href="../index.html#demo">live demo</a> uses real USGS/NOAA grids for earthquake &amp; cyclone scores.</p>
+<p class="hint" style="margin-top:var(--s3)">Note: these gallery briefs were generated with v0.1's labelled synthetic hazard field; the <a href="../demo/">live demo</a> uses real USGS/NOAA grids for earthquake &amp; cyclone scores.</p>
+</div></section>
+"""
+
+# ---------------------------------------------------------------- DEMO page (standalone)
+DEMO_SCRIPTS = '<script src="briefgen.js"></script>\n<script src="js/demo.js"></script>'
+
+def demo_body() -> str:
+    return f"""
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Try it now</span><h1>Generate a shelter design brief, right in your browser</h1>
+  <p class="lead">Pick a famous high-risk site or type any coordinates. The tool reads real earthquake and cyclone data, applies the building code you choose, and prints a plain-language brief where every recommendation cites its source. Nothing is uploaded; this runs entirely on your device.</p>
+</div></section>
+<div class="wrap">{{DEMO_CARD}}</div>
+""".replace("{DEMO_CARD}", DEMO.replace('<section id="demo" class="reveal">', '<section class="tight">').replace("</section>", "</section>", 1))
+
+# ---------------------------------------------------------------- NEWSROOM
+NEWS_POSTS = [
+    dict(date="2026-10-19", tag="Release", title="Site rebuilt as a multi-page experience",
+         body="The single long scroll became eight focused pages with breadcrumbs, prev/next navigation and a standalone live-demo page. Same engine, clearer journey."),
+    dict(date="2026-10-12", tag="Data", title="Real hazard data wired in: USGS and NOAA",
+         body="Earthquake scores now derive from the USGS ComCat catalogue (M6.0+, 1990-2026) and cyclone scores from NOAA IBTrACS climatology, both public domain. Every other layer stays clearly labelled as a demo placeholder until national agencies contribute authoritative grids."),
+    dict(date="2026-10-05", tag="Community", title="Code profiles are now community-owned",
+         body="Adding a country means one JSON file and one pull request, scaffolded by a single command. Eurocode 8, IBC/ASCE 7, IS 139, NSCP and Sphere ship today; Bangladesh's BNBC is in review."),
+    dict(date="2026-09-28", tag="Release", title="v0.2: deterministic briefs, three formats",
+         body="JSON for machines, Markdown for repositories, printable HTML for field teams. Byte-identical output for identical inputs, so a brief produced today can be cited verbatim in an audit next decade."),
+]
+
+def news_body(p: str) -> str:
+    posts = []
+    for n in NEWS_POSTS:
+        posts.append(f'''<article class="card tile post"><div class="post-meta"><time>{n["date"]}</time><span class="badge info">{n["tag"]}</span></div><h3>{n["title"]}</h3><p>{n["body"]}</p></article>''')
+    return f"""
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Newsroom</span><h1>What changed, and when</h1>
+  <p class="lead">A running log of releases, data upgrades and community milestones. Plain dates, no marketing gloss, because auditors and grant reviewers read changelogs.</p>
+</div></section>
+<section class="tight"><div class="wrap measure-wide grid grid-1">
+{chr(10).join(posts)}
+</div></section>
+<section class="tight reveal"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Roadmap</span><h2>What's coming next</h2></div>
+  <ul class="checks">
+    <li><b>National flood &amp; heat layers</b>, contributed through pull requests by the agencies that own those numbers.</li>
+    <li><b>PDF export</b> for briefs, the most-requested feature from pilot conversations.</li>
+    <li><b>Bengali, Spanish and French interfaces</b> so municipalities can use the tool in their own language.</li>
+    <li><b>First pilot municipality</b>, publishing a real reconstruction brief end-to-end.</li>
+  </ul>
+  <p><a class="btn btn-outline btn-sm" href="{p}contribute/">Help build it &rarr;</a></p>
 </div></section>
 """
 
@@ -429,8 +515,10 @@ def build_404():
     <nav class="nf-links" aria-label="Site pages">
       <a class="btn btn-primary" href="/openshelter/">Home</a>
       <a class="btn" href="/openshelter/how/">How it works</a>
+      <a class="btn" href="/openshelter/demo/">Live demo</a>
       <a class="btn" href="/openshelter/briefs/">Example plans</a>
       <a class="btn" href="/openshelter/trust/">Trust &amp; data</a>
+      <a class="btn" href="/openshelter/news/">Newsroom</a>
       <a class="btn" href="/openshelter/contribute/">Get involved</a>
     </nav>
     <p class="nf-note">Something broken? <a href="https://github.com/Manyaai/openshelter/issues/new">Tell us on GitHub</a>.</p>
@@ -475,6 +563,19 @@ def main():
         "Real end-to-end shelter design briefs generated by the OpenShelter engine for five high-risk locations.",
         "../", briefs_body(), BASE + "/briefs/"))
 
+    # DEMO (standalone page, same engine as the home widget)
+    w("demo/index.html", layout("demo",
+        "Live demo, generate a shelter design brief",
+        "Enter coordinates or pick a high-risk city, choose a building code, and get a plain-language, code-cited shelter design brief. Runs in your browser; nothing uploaded.",
+        "../", demo_body(), BASE + "/demo/",
+        scripts='<script src="../briefgen.js"></script>\n<script src="../js/demo.js"></script>'))
+
+    # NEWSROOM
+    w("news/index.html", layout("news",
+        "Newsroom & changelog, OpenShelter",
+        "Release notes, data upgrades and community milestones, plus the public roadmap for OpenShelter.",
+        "../", news_body("../"), BASE + "/news/"))
+
     # MISSION (reuse existing content, new chrome)
     w("mission/index.html", layout("mission",
         "Mission, Vision & Story, OpenShelter",
@@ -482,7 +583,7 @@ def main():
         "../", MISSION_BODY, BASE + "/mission/"))
 
     # SITEMAP
-    urls = ["", "how/", "trust/", "briefs/", "mission/", "contribute/"]
+    urls = ["", "how/", "demo/", "briefs/", "trust/", "news/", "mission/", "contribute/"]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:

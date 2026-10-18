@@ -2,8 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url><loc>https://manyaai.github.io/openshelter/</loc></url>
  <url><loc>https://manyaai.github.io/openshelter/how/</loc></url>
- <url><loc>https://manyaai.github.io/openshelter/trust/</loc></url>
+ <url><loc>https://manyaai.github.io/openshelter/demo/</loc></url>
  <url><loc>https://manyaai.github.io/openshelter/briefs/</loc></url>
+ <url><loc>https://manyaai.github.io/openshelter/trust/</loc></url>
+ <url><loc>https://manyaai.github.io/openshelter/news/</loc></url>
  <url><loc>https://manyaai.github.io/openshelter/mission/</loc></url>
  <url><loc>https://manyaai.github.io/openshelter/contribute/</loc></url>
  <url><loc>https://manyaai.github.io/openshelter/briefs/dhaka-bangladesh.html</loc></url>
