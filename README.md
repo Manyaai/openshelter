@@ -4,6 +4,10 @@
 
 # OpenShelter
 
+<p align="center"><a href="https://github.com/Manyaai/openshelter/actions"><img src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests"/></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue"/></a>
+<a href="docs/FUNDING.md"><img src="https://img.shields.io/badge/grant--ready-Sendai%20Target%20E-teal"/></a></p>
+
 **A free computer tool that helps communities design safer emergency shelters.**
 
 When disasters strike, shelters get built in a hurry — often with templates that
