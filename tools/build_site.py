@@ -78,6 +78,7 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 <link rel="apple-touch-icon" href="{p}assets/apple-touch-icon.png">
 <link rel="preload" href="{p}css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="{p}css/inter.css"></noscript>
+<script>if(!CSS.supports||!CSS.supports('font-family','Inter')){{document.write('<link rel="stylesheet" href="{p}css/fonts.css">')}}</script>
 <link rel="stylesheet" href="{p}css/style.css">
 <link rel="stylesheet" href="{p}css/dark.css">
 {extra_head}

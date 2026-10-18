@@ -2,18 +2,23 @@
 (function () {
   const root = document.documentElement;
   root.classList.add('js-ready');
-  // Theme: stored choice > OS preference
+  // Theme: stored choice > OS preference — applied ASAP to avoid flash-of-wrong-theme
   try {
     const saved = localStorage.getItem('os-theme');
     if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
   } catch (_) {}
   const mq = window.matchMedia('(prefers-color-scheme: dark)');
   function isDark() { return (root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light')) === 'dark'; }
+  function syncMeta() {
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', isDark() ? '#0b1a22' : '#0b6e66');
+  }
   function syncIcon() {
     document.querySelectorAll('.theme-toggle').forEach(b => {
       b.textContent = isDark() ? '☀️' : '🌙';
       b.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
     });
+    syncMeta();
   }
   document.addEventListener('click', e => {
     if (!e.target.closest('.theme-toggle')) return;
