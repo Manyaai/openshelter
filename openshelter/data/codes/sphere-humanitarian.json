@@ -1,0 +1,13 @@
+{
+  "id": "sphere-humanitarian",
+  "name": "Sphere Handbook (2018) Shelter & Settlements + WASH minimum standards",
+  "jurisdiction": "global",
+  "standards": ["Sphere Standard 1 (adequate shelter)", "Sphere Standard 2 (settlement strategy)", "IASC Guidelines on Mental Health", "UNHCR emergency shelter standards"],
+  "min_pga_g": 0.0,
+  "wind_speed_kmh": 120.0,
+  "flood_return_period_yr": 0,
+  "snow_load_knm2": 0.0,
+  "thermal_min_note": "Thermal comfort: habitable 18-30 C, ventilation >= 2 air changes/hour",
+  "accessibility": false,
+  "notes": "Humanitarian baseline: 4.6 m2 covered area/person (warm climates), 3.5 m2 open space/person, security of tenure, cultural appropriateness."
+}

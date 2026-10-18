@@ -1,0 +1,13 @@
+{
+  "id": "eu-eurocode-8",
+  "name": "Eurocode 8 + EPBD recast (EU minimum)",
+  "jurisdiction": "eu",
+  "standards": ["EN 1998-1", "EN 1990", "Directive (EU) 2024/3100 (EPBD recast)", "EN 1991-1-3 snow", "EN 1991-1-4 wind"],
+  "min_pga_g": 0.15,
+  "wind_speed_kmh": 140.0,
+  "flood_return_period_yr": 100,
+  "snow_load_knm2": 0.6,
+  "thermal_min_note": "nZEB zero-emission standard from 2030 (new builds) per EPBD recast",
+  "accessibility": true,
+  "notes": "Envelope requirements are set nationally; this profile encodes EU-level minima. Replace with national annex profiles for procurement use."
+}
