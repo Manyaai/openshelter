@@ -2,7 +2,7 @@
 """Render brand PNGs (OG image, apple-touch-icon) from SVG sources. Run: python tools/gen_og_image.py"""
 import cairosvg, pathlib
 root = pathlib.Path(__file__).resolve().parents[1]
-og_svg = root / "site/og-image.png.svg"
+og_svg = root / "site/og-image.svg"
 if og_svg.exists():
     cairosvg.svg2png(url=str(og_svg), write_to=str(root / "site/og-image.png"), output_width=1200, output_height=630)
     print("wrote site/og-image.png")
