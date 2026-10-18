@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B7A75"/>
+      <stop offset="1" stop-color="#118AB2"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20,10) scale(0.39)">
+    <rect x="16" y="16" width="480" height="480" rx="96" fill="url(#bg2)"/>
+    <path d="M256 108 L408 236 L372 236 L372 360 Q372 380 352 380 L160 380 Q140 380 140 360 L140 236 L104 236 Z" fill="#FFFFFF"/>
+    <path d="M226 380 L226 300 Q226 286 240 286 L272 286 Q286 286 286 300 L286 380 Z" fill="#0B7A75"/>
+    <path d="M196 232 L240 272 L316 186" fill="none" stroke="#FFD166" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="240" y="118" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#0B7A75">OpenShelter</text>
+  <text x="242" y="172" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="30" fill="#5C677D">Free tools for safer emergency shelters</text>
+</svg>

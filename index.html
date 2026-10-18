@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenShelter — open-source multi-hazard shelter design advisor</title>
+<meta name="description" content="Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo — runs in your browser, nothing uploaded.">
+<meta property="og:title" content="OpenShelter — safer shelters, open by default">
+<meta property="og:description" content="Public hazard data + published building codes = auditable shelter design briefs. Free, open source, runs offline.">
+<meta property="og:url" content="https://manyaai.github.io/openshelter/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://manyaai.github.io/openshelter/">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"OpenShelter","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Open-source multi-hazard resilient shelter design advisor producing auditable, code-cited shelter design briefs.","codeRepository":"https://github.com/Manyaai/openshelter","license":"https://spdx.org/licenses/AGPL-3.0-or-later.html"}
+</script>
+</head>
+<body>
+<a class="skip" href="#demo">Skip to live demo</a>
+<div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="mission/">read our story</a></div>
+
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="./"><img src="logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b>OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#demo">Live demo</a><a href="briefs/">Brief gallery</a><a href="#how">How it works</a><a href="#trust">Data &amp; trust</a><a href="mission/">Mission</a>
+    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">Digital public infrastructure · AGPL-3.0</span>
+  <h1>Every community deserves a shelter designed for <em>its</em> hazards.</h1>
+  <p class="lead">OpenShelter turns public hazard data and published building codes into plain-language, printable design briefs — where <b>every recommendation cites the clause and the measurement behind it.</b> No black boxes. No fees. No vendor lock-in.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#demo">Try the live demo →</a>
+    <a class="btn btn-outline" href="briefs/">See example briefs</a>
+  </div>
+  <div class="trust-row">
+    <span class="pill">🔒 Runs in your browser — nothing uploaded</span>
+    <span class="pill">📜 Every rule cites its code clause</span>
+    <span class="pill">🧮 Deterministic — same input, same brief, forever</span>
+    <span class="pill">📶 Works offline on a field laptop</span>
+  </div>
+</div></section>
+
+<div class="stats"><div class="wrap"><div class="grid">
+  <div class="stat"><b>5</b><span>building-code profiles shipped (EU · US · India · Philippines · Sphere)</span></div>
+  <div class="stat"><b>2</b><span>real public-domain hazard datasets wired in (USGS, NOAA)</span></div>
+  <div class="stat"><b>100%</b><span>open source — inspectable JSON rules, diffable in git</span></div>
+  <div class="stat"><b>$0</b><span>forever free for governments, NGOs and classrooms</span></div>
+</div></div></div>
+
+<section id="demo"><div class="wrap"><div class="card demo-card">
+  <h2>Generate a design brief — in your browser, right now</h2>
+  <p class="hint" id="datastatus">Loading hazard data…</p>
+  <form class="demo" id="f">
+    <div class="fld" style="grid-column:1/-1"><label for="preset">Pick a famous high-risk site (auto-generates)</label>
+      <select id="preset">
+        <option value="">— or enter coordinates manually below —</option>
+        <option value="23.81,90.41">Dhaka, Bangladesh — flood / cyclone / heat</option>
+        <option value="14.60,120.98">Manila, Philippines — typhoon / earthquake</option>
+        <option value="41.01,28.98">Istanbul, Türkiye — earthquake</option>
+        <option value="18.54,-72.26">Port-au-Prince, Haiti — earthquake / hurricane</option>
+        <option value="21.43,92.01">Cox's Bazar, Bangladesh — cyclone / landslide</option>
+        <option value="19.43,-99.13">Mexico City, Mexico — seismic</option>
+        <option value="35.68,139.65">Tokyo, Japan — earthquake / typhoon</option>
+        <option value="-19.83,34.86">Beira, Mozambique — cyclone / flood</option>
+        <option value="-18.12,178.45">Suva, Fiji — cyclone / sea-level rise</option>
+        <option value="-6.21,106.85">Jakarta, Indonesia — earthquake / flood</option>
+      </select></div>
+    <div class="fld"><label for="lat">Latitude</label><input id="lat" type="number" step="0.01" min="-90" max="90" value="23.81" required></div>
+    <div class="fld"><label for="lon">Longitude</label><input id="lon" type="number" step="0.01" min="-180" max="180" value="90.39" required></div>
+    <div class="fld"><label for="code">Building code profile</label><select id="code">
+        <option value="in-is139-is4352">India — IS 139 / IS 4352</option>
+        <option value="eu-eurocode-8">EU — Eurocode 8</option>
+        <option value="us-iebc">USA — IBC / ASCE 7</option>
+        <option value="ph-nscc">Philippines — NSCP</option>
+        <option value="sphere-humanitarian">Sphere humanitarian standards</option>
+      </select></div>
+    <div class="fld"><label for="pop">People sheltered</label><input id="pop" type="number" min="0" value="5000"></div>
+    <div class="fld"><label for="water">Distance to river/coast (m)</label><input id="water" type="number" min="0" value="5000"></div>
+    <button class="go" type="submit">Generate design brief</button>
+  </form>
+  <div id="out" aria-live="polite"></div>
+  <div class="disclaimer"><b>Honesty policy.</b> Earthquake &amp; cyclone scores come from real public-domain data (USGS ComCat M6.0+ 1990–2026; NOAA IBTrACS climatology). Flood, heat, drought and landslide values are labelled demo placeholders until national agencies contribute authoritative layers. OpenShelter produces pre-design guidance, not stamped engineering — a licensed local engineer must verify structural calculations before construction.</div>
+</div></div></section>
+
+<section id="how" class="tight" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">How it works</span><h2>Three deterministic steps — no AI guessing</h2>
+  <p>Governments spending public money must answer: <i>who decided this, on what basis?</i> OpenShelter can, line by line.</p></div>
+  <div class="grid grid-3">
+    <div class="card tile"><span class="num">1</span><h3>Hazard fingerprint</h3><p>Your coordinates are looked up in gridded public datasets — USGS earthquakes, NOAA cyclone tracks today; national flood &amp; heat layers next. Every value carries its source label.</p></div>
+    <div class="card tile"><span class="num">2</span><h3>Code profile</h3><p>Each jurisdiction's rules (Eurocode 8, IS 139, ASCE 7, NSCP, Sphere) live in machine-readable JSON anyone can inspect, diff and correct via pull request — owned by the countries themselves.</p></div>
+    <div class="card tile"><span class="num">3</span><h3>Rule engine</h3><p>Hazard × code produces ranked measures and compliance checks. Same inputs → byte-identical brief, forever. That is what makes it usable in audits and procurement.</p></div>
+  </div>
+  <div style="margin-top:var(--s3)">
+    <details open><summary>Why "explainable" beats "smart"</summary><div class="d-body"><p>A neural network cannot cite clause 4.2 of a national standard. Every OpenShelter recommendation prints the hazard value and the exact code clause that produced it. No hidden model, no proprietary data, no subscription.</p></div></details>
+    <details><summary>What it deliberately does NOT do</summary><div class="d-body"><p>It does not replace a licensed structural engineer, stamp drawings, or claim site-specific geotechnical truth. It closes the gap between "no plan at all" and "an unaffordable consultancy" by producing the pre-design brief that makes the engineer's job faster, cheaper and locally appropriate.</p></div></details>
+    <details><summary>The problem in one paragraph</summary><div class="d-body"><p>Billions of dollars flow into emergency shelters every year. Most are designed from copy-paste templates that ignore local codes and local hazards — so the same "safe" shelter that survives an earthquake in one country collapses in a flood somewhere else. Hazard maps exist. Building codes exist. Nothing free and auditable connected them — until now.</p></div></details>
+  </div>
+</div></section>
+
+<section id="trust" class="tight"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Transparency</span><h2>Data sources &amp; honesty policy</h2>
+  <p>We label demo values as demo values. This transparency <i>is</i> the product.</p></div>
+  <div class="card" style="padding:var(--s3)">
+  <table class="src">
+    <tr><th>Layer</th><th>Source used today</th><th>Status</th></tr>
+    <tr><td>Earthquake</td><td><a href="https://earthquake.usgs.gov/data/comcat/">USGS ComCat</a> catalogue, M6.0+ events 1990–2026 (public domain), decay-kernel interpolated to 0.5° grid</td><td><span class="badge pass">REAL DATA</span></td></tr>
+    <tr><td>Cyclone</td><td><a href="https://www.ncei.noaa.gov/products/international-best-track-analysis-system">NOAA IBTrACS</a> tropical-cyclone best-track climatology (public domain), storm-track density by basin</td><td><span class="badge pass">REAL DATA</span></td></tr>
+    <tr><td>Flood / Heat / Drought / Landslide</td><td>Deterministic synthetic field for demonstration; swap-in interface ready for GEM Risk Library &amp; Copernicus EMS rasters</td><td><span class="badge review">DEMO — clearly labelled</span></td></tr>
+    <tr><td>Building codes</td><td>5 curated profiles citing published standards: Eurocode 8, IBC/ASCE 7/FEMA P-361, IS 139/IS 4352, NSCP 2010, Sphere Handbook</td><td><span class="badge pass">CITED CLAUSES</span></td></tr>
+  </table></div>
+</div></section>
+
+<section id="impact" class="tight" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap">
+  <div class="sec-head"><span class="kicker">Who it serves</span><h2>Built for the people who sign the checks — and the people who need the roof</h2></div>
+  <div class="grid grid-3">
+    <div class="card tile"><h3>🏛 Governments &amp; disaster agencies</h3><p>Turn shelter reconstruction budgets into code-compliant, auditable design requirements in minutes instead of months. Publish the briefs as open procurement documents aligned with the Sendai Framework.</p></div>
+    <div class="card tile"><h3>🎓 Universities &amp; schools</h3><p>A real, forkable teaching tool for risk-engineering and policy studios. Students add their own country's code profile as coursework — and ship it upstream.</p></div>
+    <div class="card tile"><h3>🤝 NGOs &amp; community builders</h3><p>Field teams get a printable checklist tuned to local hazards before buying materials. Runs offline on a laptop or phone; no account, no fees, nothing uploaded.</p></div>
+  </div>
+</div></section>
+
+<section id="contribute" class="tight"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Get involved</span><h2>Contribute — three ways, ten minutes each</h2></div>
+  <ol style="padding-left:1.2rem;color:var(--ink-soft)">
+    <li style="margin-bottom:.7rem"><b>Add your country's building code.</b> Run <code>python tools/new_code_profile.py --id bd-bnbc --jurisdiction BD --name "Bangladesh National Building Code"</code>, fill the JSON, open a pull request. One file, fully validated by CI.</li>
+    <li style="margin-bottom:.7rem"><b>Correct a number we got wrong.</b> Every rule lives in plain JSON with citations. Fix it like a Wikipedia page; engineers worldwide benefit instantly.</li>
+    <li style="margin-bottom:.7rem"><b>Translate the interface.</b> Bengali, Spanish and French first — help a non-English-speaking municipality use it.</li>
+  </ol>
+  <p><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Read CONTRIBUTING.md →</a>&nbsp; <a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding &amp; grant pathways →</a></p>
+</div></section>
+
+<footer class="site"><div class="wrap">
+  <div class="grid">
+    <div><h4>OpenShelter</h4><p style="margin:0">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p></div>
+    <div><h4>Explore</h4><a href="#demo">Live demo</a><a href="briefs/">Brief gallery</a><a href="mission/">Mission &amp; vision</a><a href="#trust">Data sources</a></div>
+    <div><h4>Build</h4><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
+    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a></div>
+  </div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
+</div></footer>
+
+<script src="briefgen.js"></script>
+<script src="js/demo.js"></script>
+</body>
+</html>

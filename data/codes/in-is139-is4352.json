@@ -1,0 +1,13 @@
+{
+  "id": "in-is139-is4352",
+  "name": "IS 13932 (cyclone-resistant buildings) + IS 4352/IS 1893 (earthquake) - National Building Code of India",
+  "jurisdiction": "in",
+  "standards": ["IS 13932:2016", "IS 1893-1:2016", "IS 875 loads", "CPHEEO water standards"],
+  "min_pga_g": 0.24,
+  "wind_speed_kmh": 215.0,
+  "flood_return_period_yr": 50,
+  "snow_load_knm2": 0.0,
+  "thermal_min_note": "ECBC 2017 (Compliant Comfort) for climate zones",
+  "accessibility": true,
+  "notes": "Wind speeds per IS 875-3 basic wind map; coastal Bay-of-Bengal districts require cyclone-resilient detailing."
+}
