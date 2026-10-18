@@ -32,3 +32,6 @@ include = ["openshelter*"]
 
 [tool.setuptools.package-data]
 openshelter = ["data/codes/*.json"]
+
+[tool.pytest.ini_options]
+addopts = "-p no:libtmux"
