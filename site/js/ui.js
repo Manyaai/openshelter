@@ -15,7 +15,6 @@
  }
  function syncIcon() {
  document.querySelectorAll('.theme-toggle').forEach(b => {
- b.textContent = isDark() ? '☀️' : '🌙';
  b.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
  });
  syncMeta();

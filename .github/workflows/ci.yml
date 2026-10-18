@@ -18,5 +18,6 @@ jobs:
         with: { python-version: "3.12" }
       - run: python tools/build_site.py
       - run: python tools/check_links.py
+      - run: python tools/check_themes.py
       - name: Fail if build output differs from committed site
         run: git diff --exit-code -- site/ || (echo "site/ is stale; run: python tools/build_site.py and commit"; exit 1)

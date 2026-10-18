@@ -129,8 +129,8 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
   <nav class="nav" aria-label="Main navigation">
     {nav_html}
-    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
-    <a class="btn-nav" href="{REPO}">GitHub ★</a></span>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <a class="btn-nav" href="{REPO}">GitHub</a></span>
   </nav>
 </div></header>
 {crumbs(page_id, p)}
