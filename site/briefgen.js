@@ -4,6 +4,14 @@
  */
 const HAZARD_NAMES = ["flood","earthquake","cyclone","heatwave","drought","landslide"];
 
+/* Famous high-risk preset sites shared by the demo form and the Leaflet map */
+const PRESETS = [
+  ["Dhaka, Bangladesh", "23.81,90.41"], ["Manila, Philippines", "14.60,120.98"],
+  ["Istanbul, Türkiye", "41.01,28.98"], ["Port-au-Prince, Haiti", "18.54,-72.26"],
+  ["Cox's Bazar, Bangladesh", "21.43,92.01"], ["Mexico City, Mexico", "19.43,-99.13"],
+  ["Tokyo, Japan", "35.68,139.65"], ["Beira, Mozambique", "-19.83,34.86"],
+  ["Suva, Fiji", "-18.12,178.45"], ["Jakarta, Indonesia", "-6.21,106.85"]];
+
 /* Real public-domain hazard grids (0.5 deg): USGS ComCat earthquakes, NOAA IBTrACS cyclone climatology */
 let GRID_EQ = null, GRID_CY = null;
 async function loadHazardGrids(){

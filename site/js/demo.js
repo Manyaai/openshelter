@@ -1,18 +1,51 @@
-/* OpenShelter live demo controller (uses briefgen.js engine port) */
+/* OpenShelter live demo controller — engine in briefgen.js, Leaflet self-hosted */
 (async () => {
   const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const ok = await loadHazardGrids();
   $('datastatus').innerHTML = ok
     ? '✅ Earthquake &amp; cyclone scores computed live from <b>real public-domain grids</b> (USGS ComCat + NOAA IBTrACS).'
     : '⚠️ Hazard grids unavailable offline — falling back to the labelled synthetic demo field.';
 
-  $('preset').addEventListener('change', e => {
-    if (!e.target.value) return;
-    const [la, lo] = e.target.value.split(',');
-    $('lat').value = la; $('lon').value = lo;
-    $('f').requestSubmit(); // instant gratification: generate on pick
-  });
+  /* ---- interactive hazard map (progressive enhancement) ---- */
+  let mapMarker = null;
+  function initMap() {
+    if (typeof L === 'undefined') return;
+    const map = L.map('hzmap', { scrollWheelZoom: false, worldCopyJump: true }).setView([20, 15], 2);
+    const light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 12, attribution: '&copy; OpenStreetMap &copy; CARTO' });
+    const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 12, attribution: '&copy; OpenStreetMap &copy; CARTO' });
+    const which = () => (document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light')) === 'dark' ? dark : light;
+    which().addTo(map);
+    document.addEventListener('click', e => { if (e.target.closest('.theme-toggle')) { map.eachLayer(l => l._url && map.removeLayer(l)); which().addTo(map); } });
+    PRESETS.forEach(p => L.circleMarker([+p[1].split(',')[0], +p[1].split(',')[1]], { radius: 6, color: '#0b6e66', weight: 2, fillColor: '#3ec9b0', fillOpacity: .8 })
+      .bindTooltip(`${p[0]} — click to generate`, { direction: 'top' })
+      .on('click', () => pickSite(p[1]))
+      .addTo(map));
+    map.on('click', ev => pickSite(`${ev.latlng.lat.toFixed(2)},${ev.latlng.lng.toFixed(2)}`));
+    mapMarker = L.marker([23.81, 90.41], { opacity: .95 }).addTo(map).bindPopup('Selected site');
+    $('maphint').style.display = 'block';
+  }
+  function moveMarker(lat, lon) { if (mapMarker) mapMarker.setLatLng([lat, lon]).openPopup(); }
 
+  function pickSite(val) {
+    const [la, lo] = val.split(',');
+    $('lat').value = la; $('lon').value = lo;
+    $('f').requestSubmit();
+    document.getElementById('demo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('preset').addEventListener('change', e => { if (e.target.value) pickSite(e.target.value); });
+
+  /* ---- hazard fingerprint bars ---- */
+  const SRC_TAG = { earthquake: 'USGS · real', cyclone: 'NOAA · real', flood: 'demo', heatwave: 'demo', drought: 'demo', landslide: 'demo' };
+  function hzBars(hz) {
+    return `<div class="hzbars">${Object.entries(hz).sort((a, z) => z[1] - a[1]).map(([k, v]) => {
+      const real = (k === 'earthquake' || k === 'cyclone') && GRID_EQ && GRID_CY;
+      return `<div class="hzbar ${real ? 'real' : ''}"><span>${esc(k)}</span><span class="track"><span class="fill" style="display:block;width:${Math.round(v * 100)}%"></span></span><span>${v.toFixed(2)}</span></div>`;
+    }).join('')}</div>
+    <div class="legend"><span><i style="background:linear-gradient(90deg,var(--brand),#118AB2)"></i>computed from real public-domain data</span><span><i style="background:var(--brand);opacity:.45"></i>labelled demo placeholder</span></div>`;
+  }
+
+  /* ---- form → brief ---- */
   $('f').addEventListener('submit', async e => {
     e.preventDefault();
     const lat = parseFloat($('lat').value), lon = parseFloat($('lon').value);
@@ -23,18 +56,33 @@
         soil_bearing_kpa: 150, population_served: parseInt($('pop').value) || 0,
         hazards: susceptibility(lat, lon, true) };
       const b = await generateBrief(site, $('code').value);
-      const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-      const hz = Object.entries(site.hazards).sort((a, z) => z[1] - a[1]);
+      moveMarker(lat, lon);
+      const share = `${location.origin}${location.pathname}#site=${lat},${lon}&code=${$('code').value}`;
       out.innerHTML = `
         <div class="result-head"><h3>Design brief — ${lat.toFixed(2)}, ${lon.toFixed(2)}</h3>
           <span class="badge p1">dominant: ${esc(b.dominant_hazard)}</span>
           <span class="badge p3">exposure ${b.exposure}</span></div>
         <p class="prov">🔎 Provenance: ${esc(b.meta.hazard_source)} · code profile <code>${esc(b.meta.code_profile)}</code> · engine v${esc(b.meta.engine_version || '0.2')} — deterministic: same inputs always produce this exact brief.</p>
         <p><b>Suggested structural system:</b> ${esc(b.structural_system)}</p>
-        <p style="font-size:.9rem"><b>Hazard fingerprint:</b> ${hz.map(([k, v]) => `${esc(k)} ${v.toFixed(2)}`).join(' · ')}</p>
+        <p style="font-size:.9rem;margin-bottom:.2rem"><b>Hazard fingerprint</b></p>
+        ${hzBars(site.hazards)}
         <p>${b.compliance_checks.map(c => `<span class="badge ${c.status === 'PASS' ? 'pass' : 'review'}">${esc(c.id)}: ${esc(c.status)}</span>`).join(' ')}</p>
         <ul class="recs">${b.recommendations.map(r => `<li><span class="badge p${r.priority}">P${r.priority}</span><b>${esc(r.measure)}</b><em>Why: ${esc(r.reason)}</em></li>`).join('')}</ul>
-        <p><button class="go" style="width:auto;padding:.6rem 1.4rem" onclick="window.print()">🖨 Print / save this brief as PDF</button></p>`;
+        <p style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <button class="go" style="width:auto;padding:.6rem 1.4rem" onclick="window.print()">🖨 Print / save as PDF</button>
+          <a class="btn btn-outline btn-sm" href="${share}" rel="noopener">🔗 Copy share link</a>
+          <button class="btn btn-outline btn-sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${share}');this.textContent='✓ Link copied'">⧉ Share this brief</button>
+        </p>`;
     } catch (err) { out.innerHTML = `<p style="color:var(--bad)">Error: ${esc(err.message)}</p>`; }
   });
+
+  initMap();
+
+  /* ---- deep link: #site=lat,lon&code=profile ---- */
+  const m = location.hash.match(/site=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(&code=([\w.-]+))?/);
+  if (m) {
+    $('lat').value = m[1]; $('lon').value = m[2];
+    if (m[4]) $('code').value = m[4];
+    $('f').requestSubmit();
+  }
 })();

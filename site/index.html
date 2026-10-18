@@ -9,12 +9,17 @@
 <meta property="og:description" content="Public hazard data + published building codes = auditable shelter design briefs. Free, open source, runs offline.">
 <meta property="og:url" content="https://manyaai.github.io/openshelter/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="og-image.svg">
+<meta property="og:image" content="og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6e66">
 <link rel="canonical" href="https://manyaai.github.io/openshelter/">
 <link rel="sitemap" type="application/xml" href="sitemap.xml">
-<link rel="icon" type="image/svg+xml" href="logo.svg">
-<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="css/inter.css"></noscript>
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/vendor/leaflet/leaflet.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"OpenShelter","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Open-source multi-hazard resilient shelter design advisor producing auditable, code-cited shelter design briefs.","codeRepository":"https://github.com/Manyaai/openshelter","license":"https://spdx.org/licenses/AGPL-3.0-or-later.html"}
 </script>
@@ -24,9 +29,10 @@
 <div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="mission/">read our story</a></div>
 
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="./"><img src="logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b>OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <a class="brand" href="./"><img src="logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
   <nav class="nav" aria-label="Main navigation">
     <a href="#demo">Live demo</a><a href="briefs/">Brief gallery</a><a href="#how">How it works</a><a href="#trust">Data &amp; trust</a><a href="mission/">Mission</a>
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
     <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a>
   </nav>
 </div></header>
@@ -45,6 +51,8 @@
     <span class="pill">🧮 Deterministic — same input, same brief, forever</span>
     <span class="pill">📶 Works offline on a field laptop</span>
   </div>
+  <div class="hero-map" id="hzmap" role="img" aria-label="World map of famous high-risk sites; click any marker to generate a brief"></div>
+  <p class="map-note" id="maphint" style="display:none">Click a glowing marker — or anywhere on the map — to generate that site's design brief instantly.</p>
 </div></section>
 
 <div class="stats"><div class="wrap"><div class="grid">
@@ -54,7 +62,7 @@
   <div class="stat"><b>$0</b><span>forever free for governments, NGOs and classrooms</span></div>
 </div></div></div>
 
-<section id="demo"><div class="wrap"><div class="card demo-card">
+<section id="demo" class="reveal"><div class="wrap"><div class="card demo-card">
   <h2>Generate a design brief — in your browser, right now</h2>
   <p class="hint" id="datastatus">Loading hazard data…</p>
   <form class="demo" id="f">
@@ -104,7 +112,7 @@
   </div>
 </div></section>
 
-<section id="trust" class="tight"><div class="wrap measure">
+<section class="reveal" id="trust" class="tight"><div class="wrap measure">
   <div class="sec-head"><span class="kicker">Transparency</span><h2>Data sources &amp; honesty policy</h2>
   <p>We label demo values as demo values. This transparency <i>is</i> the product.</p></div>
   <div class="card" style="padding:var(--s3)">
@@ -117,7 +125,7 @@
   </table></div>
 </div></section>
 
-<section id="impact" class="tight" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap">
+<section class="reveal" id="impact" class="tight" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap">
   <div class="sec-head"><span class="kicker">Who it serves</span><h2>Built for the people who sign the checks — and the people who need the roof</h2></div>
   <div class="grid grid-3">
     <div class="card tile"><h3>🏛 Governments &amp; disaster agencies</h3><p>Turn shelter reconstruction budgets into code-compliant, auditable design requirements in minutes instead of months. Publish the briefs as open procurement documents aligned with the Sendai Framework.</p></div>
@@ -126,7 +134,7 @@
   </div>
 </div></section>
 
-<section id="contribute" class="tight"><div class="wrap measure">
+<section class="reveal" id="contribute" class="tight"><div class="wrap measure">
   <div class="sec-head"><span class="kicker">Get involved</span><h2>Contribute — three ways, ten minutes each</h2></div>
   <ol style="padding-left:1.2rem;color:var(--ink-soft)">
     <li style="margin-bottom:.7rem"><b>Add your country's building code.</b> Run <code>python tools/new_code_profile.py --id bd-bnbc --jurisdiction BD --name "Bangladesh National Building Code"</code>, fill the JSON, open a pull request. One file, fully validated by CI.</li>
@@ -146,7 +154,10 @@
   <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
 </div></footer>
 
+<button class="totop" aria-label="Back to top">↑</button>
+<script src="js/leaflet.js"></script>
 <script src="briefgen.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/demo.js"></script>
 </body>
 </html>
