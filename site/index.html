@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenShelter — free tool for safer emergency shelters</title>
+<meta name="description" content="Open-source multi-hazard resilient shelter design advisor. Try the live demo: pick a location and building code, get an auditable design brief in seconds.">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<style>
+:root{--ink:#0e2a33;--teal:#0f766e;--amber:#d97706;--paper:#fafaf7;--card:#fff;--line:#e5e2da;--muted:#5b6b70}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.5rem;background:var(--card);border-bottom:1px solid var(--line)}
+header img{height:44px}header b{font-size:1.25rem}header small{color:var(--muted);display:block;margin-top:-4px}
+nav{margin-left:auto;display:flex;gap:1rem}nav a{color:var(--teal);text-decoration:none;font-weight:600}
+.hero{text-align:center;padding:3rem 1rem 2rem;max-width:760px;margin:0 auto}
+.hero h1{font-size:clamp(1.7rem,4.5vw,2.6rem);margin:0 0 .8rem}
+.hero p{color:var(--muted);font-size:1.1rem;margin:0 auto 1.5rem;max-width:60ch}
+.cta{display:inline-block;background:var(--teal);color:#fff;padding:.75rem 1.6rem;border-radius:8px;font-weight:700;text-decoration:none;margin-right:.6rem}
+.cta.alt{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:900px;margin:1.5rem auto;padding:0 1rem}
+.step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem}
+.step b{display:block;color:var(--teal);margin-bottom:.3rem}
+section.demo{max-width:900px;margin:2rem auto;padding:0 1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.5rem}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem}
+label{font-size:.85rem;font-weight:700}input,select{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin-top:.25rem}
+button.go{grid-column:1/-1;background:var(--teal);color:#fff;border:0;border-radius:8px;padding:.8rem;font-size:1.05rem;font-weight:700;cursor:pointer}
+#out{margin-top:1.2rem}
+.badge{display:inline-block;padding:.15rem .6rem;border-radius:99px;font-size:.78rem;font-weight:700}
+.p1{background:#fee2e2;color:#b91c1c}.p2{background:#fef3c7;color:#92400e}.p3{background:#e0f2fe;color:#075985}
+.pass{background:#dcfce7;color:#166534}.review{background:#fef3c7;color:#92400e}
+ul.recs{list-style:none;padding:0}ul.recs li{border-bottom:1px dashed var(--line);padding:.6rem 0}
+ul.recs li em{display:block;color:var(--muted);font-size:.86rem}
+.disclaimer{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:.7rem 1rem;font-size:.85rem;color:#7c2d12;margin-top:1rem}
+footer{text-align:center;color:var(--muted);padding:2rem 1rem;font-size:.9rem}
+@media print{header,nav,.hero,.steps,form,footer,.cta{display:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <img src="logo.svg" alt="OpenShelter logo">
+  <div><b>OpenShelter</b><small>safer shelters, open by default</small></div>
+  <nav><a href="#demo">Try it</a><a href="https://github.com/Manyaai/openshelter">GitHub</a><a href="briefs/">Brief gallery</a></nav>
+</header>
+
+<div class="hero">
+  <h1>A free computer tool that helps communities design safer emergency shelters</h1>
+  <p>OpenShelter combines public hazard data with real building codes to produce plain-language design briefs — every recommendation traceable to the rule that produced it.</p>
+  <a class="cta" href="#demo">Generate a brief ↓</a>
+  <a class="cta alt" href="https://github.com/Manyaai/openshelter">View on GitHub</a>
+</div>
+
+<div class="steps">
+  <div class="step"><b>1 · Where?</b>You enter a location (latitude &amp; longitude) and who it must protect.</div>
+  <div class="step"><b>2 · Which rules?</b>Pick the local building code — or use our ready-made profiles for India, EU, US, Philippines &amp; Sphere standards.</div>
+  <div class="step"><b>3 · Get the brief</b>In seconds you get a printable checklist: structure, water, heat, sanitation — each item citing its source.</div>
+</div>
+
+<section class="demo" id="demo">
+  <div class="card">
+    <h2 style="margin-top:0">Live demo — runs entirely in your browser, nothing uploaded</h2>
+    <form id="f">
+      <div><label>Latitude<input id="lat" type="number" step="0.01" min="-90" max="90" value="23.81" required></label></div>
+      <div><label>Longitude<input id="lon" type="number" step="0.01" min="-180" max="180" value="90.39" required></label></div>
+      <div><label>Building code<select id="code">
+        <option value="in-is139-is4352">India — IS 139 / IS 4352</option>
+        <option value="eu-eurocode-8">EU — Eurocode 8</option>
+        <option value="us-iebc">USA — IBC / ASCE 7</option>
+        <option value="ph-nscc">Philippines — NSCP</option>
+        <option value="sphere-humanitarian">Sphere humanitarian standards</option>
+      </select></label></div>
+      <div><label>People sheltered<input id="pop" type="number" min="0" value="5000"></label></div>
+      <div><label>Distance to river/coast (m)<input id="water" type="number" min="0" value="5000"></label></div>
+      <button class="go" type="submit">Generate design brief</button>
+    </form>
+    <div id="out"></div>
+    <div class="disclaimer">⚠️ Demo uses a synthetic hazard field for illustration. It produces pre-design guidance, not stamped engineering — a licensed local engineer must verify structural calculations before construction.</div>
+  </div>
+</section>
+
+<footer>OpenShelter is AGPL-3.0 open source · built for governments, NGOs and communities · <a href="https://github.com/Manyaai/openshelter">contribute on GitHub</a></footer>
+
+<script src="briefgen.js"></script>
+<script>
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const lat = parseFloat(document.getElementById('lat').value);
+  const lon = parseFloat(document.getElementById('lon').value);
+  const out = document.getElementById('out');
+  out.textContent = 'Generating…';
+  try {
+    const site = { lat, lon, elevation_m: 0, distance_to_water_m: parseFloat(document.getElementById('water').value)||5000,
+                   soil_bearing_kpa: 150, population_served: parseInt(document.getElementById('pop').value)||0,
+                   hazards: susceptibility(lat, lon) };
+    const b = await generateBrief(site, document.getElementById('code').value);
+    const esc = s => String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    out.innerHTML = `<h3>Brief for ${lat}, ${lon} — dominant hazard: <b>${esc(b.dominant_hazard)}</b> (exposure ${b.exposure})</h3>
+    <p><b>Suggested structural system:</b> ${esc(b.structural_system)}</p>
+    <p>${b.compliance_checks.map(c=>`<span class="badge ${c.status==='PASS'?'pass':'review'}">${esc(c.id)}: ${esc(c.status)}</span>`).join(' ')}</p>
+    <ul class="recs">${b.recommendations.map(r=>`<li><span class="badge p${r.priority}">P${r.priority}</span> <b>${esc(r.measure)}</b><em>Why: ${esc(r.reason)}</em></li>`).join('')}</ul>
+    <p><button class="go" style="width:auto;padding:.5rem 1.2rem" onclick="window.print()">🖨 Print this brief</button></p>`;
+  } catch(err){ out.innerHTML = '<p style="color:#b91c1c">Error: '+err.message+'</p>'; }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "id": "us-iebc",
+  "name": "International Building Code / Emergency & Ice Rescue-type temporary structures (IBC Ch.1 Group R emergency shelters)",
+  "jurisdiction": "us",
+  "standards": ["IBC 2024", "ASCE 7-22", "FEMA P-361 (safe rooms)", "ADA Standards"],
+  "min_pga_g": 0.20,
+  "wind_speed_kmh": 177.0,
+  "flood_return_period_yr": 100,
+  "snow_load_knm2": 0.5,
+  "thermal_min_note": "IECC climate-zone envelope minima",
+  "accessibility": true,
+  "notes": "Emergency shelters must meet IBC Group R assembly + FEMA safe-room criteria in tornado-prone counties."
+}

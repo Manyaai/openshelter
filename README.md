@@ -6,7 +6,12 @@
 
 <p align="center"><a href="https://github.com/Manyaai/openshelter/actions"><img src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests"/></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue"/></a>
-<a href="docs/FUNDING.md"><img src="https://img.shields.io/badge/grant--ready-Sendai%20Target%20E-teal"/></a></p>
+<a href="docs/FUNDING.md"><img src="https://img.shields.io/badge/grant--ready-Sendai%20Target%20E-teal"/></a>
+<a href="https://manyaai.github.io/openshelter/"><img src="https://img.shields.io/badge/%E2%96%B6_live_demo-try%20in%20your%20browser-0f766e"/></a></p>
+
+## 🌐 Try it live — no install needed
+
+**[manyaai.github.io/openshelter](https://manyaai.github.io/openshelter/)** → enter any coordinates, pick a building code, get a printable design brief in seconds. Runs entirely in your browser; nothing is uploaded. [Sample briefs gallery](https://manyaai.github.io/openshelter/briefs/).
 
 **A free computer tool that helps communities design safer emergency shelters.**
 

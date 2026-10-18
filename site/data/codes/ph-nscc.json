@@ -1,0 +1,13 @@
+{
+  "id": "ph-nscc",
+  "name": "National Structural Code of the Philippines (Vol.1) + NDRRMC shelter guidance",
+  "jurisdiction": "ph",
+  "standards": ["NSCP 2015", "DPWH House Construction Manual (typhoon-resilient)", "ZNOS flood standards"],
+  "min_pga_g": 0.30,
+  "wind_speed_kmh": 300.0,
+  "flood_return_period_yr": 25,
+  "snow_load_knm2": 0.0,
+  "thermal_min_note": "Natural ventilation priority in tropical climate",
+  "accessibility": false,
+  "notes": "Typhoon design class: super typhoon gust region; elevation vs storm surge governs siting."
+}
