@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-header.png" alt="OpenShelter — Free tools for safer emergency shelters" width="450"/>
+ <img src="assets/logo-header.png" alt="OpenShelter. Free tools for safer emergency shelters" width="450"/>
 </p>
 
 # OpenShelter
@@ -9,22 +9,22 @@
 <a href="docs/FUNDING.md"><img src="https://img.shields.io/badge/grant--ready-Sendai%20Target%20E-teal"/></a>
 <a href="https://manyaai.github.io/openshelter/"><img src="https://img.shields.io/badge/%E2%96%B6_live_demo-try%20in%20your%20browser-0f766e"/></a></p>
 
-## 🌐 Try it live — no install needed
+## 🌐 Try it live, no install needed
 
 **[manyaai.github.io/openshelter](https://manyaai.github.io/openshelter/)** → enter any coordinates, pick a building code, get a printable design brief in seconds. Runs entirely in your browser; nothing is uploaded. [Sample briefs gallery](https://manyaai.github.io/openshelter/briefs/).
 
 **A free computer tool that helps communities design safer emergency shelters.**
 
-When disasters strike, shelters get built in a hurry — often with templates that
+When disasters strike, shelters get built in a hurry, often with templates that
 ignore local floods, earthquakes, or heat. OpenShelter fixes that: you tell it
 *where* the shelter will go, and it produces a plain-English **design brief**
-based on real published building codes — and it explains *why* it recommends
+based on real published building codes, and it explains *why* it recommends
 each measure, citing the exact hazard data and code clause behind it.
 
 ## See it in action
 
 ```bash
-pip install openshelter        # (until published, see "Try it now" below)
+pip install openshelter # (until published, see "Try it now" below)
 openshelter brief --lat 23.81 --lon 90.39 --code in-is139-is4352 --outdir out
 ```
 
@@ -41,14 +41,14 @@ HTML one-pager. Every recommendation looks like:
 git clone https://github.com/Manyaai/openshelter.git
 cd openshelter
 python -m openshelter.cli.main brief --lat 23.81 --lon 90.39 --code in-is139-is4352 --outdir out
-python -m pytest        # 13 tests, all pass
+python -m pytest # 13 tests, all pass
 ```
 
 ## Who is this for?
 
-- 🏛️ **Local governments & disaster agencies** — run it on an ordinary laptop, offline, licence-free
-- 🔧 **NGOs & engineers** — start every shelter project from a code-aware, auditable brief
-- 🎓 **Students & researchers** — a transparent reference implementation of hazard→code→design
+- 🏛️ **Local governments & disaster agencies**, run it on an ordinary laptop, offline, licence-free
+- 🔧 **NGOs & engineers**, start every shelter project from a code-aware, auditable brief
+- 🎓 **Students & researchers**, a transparent reference implementation of hazard→code→design
 
 ## Why governments support projects like this
 
@@ -71,7 +71,7 @@ reproducible, auditable decisions. Details in [`docs/FUNDING.md`](docs/FUNDING.m
 
 v0.1 uses clearly-marked **demo hazard data** to stay fully offline and
 deterministic; wiring real open datasets (GEM, Copernicus) is the next
-milestone. The tool produces a **pre-design brief** — a licensed local engineer
+milestone. The tool produces a **pre-design brief**, a licensed local engineer
 must still sign the final structural calculations.
 
 ## Contributing
@@ -81,7 +81,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md). Beginner-friendly issues welcome.
 
 ## License
 
-AGPL-3.0 — free to use, study, and adapt; improvements shared back.
+AGPL-3.0, free to use, study, and adapt; improvements shared back.
 Dual licensing available for agencies needing other terms (see CONTRIBUTING).
 
 <p align="center"><img src="assets/logo.png" alt="OpenShelter logo" width="80"/></p>

@@ -1,4 +1,4 @@
-/* OpenShelter dark mode — respects OS preference, toggle via [data-theme] on <html> */
+/* OpenShelter dark mode - respects OS preference, toggle via [data-theme] on <html> */
 :root[data-theme="dark"]{
   --ink:#e8f0f3; --ink-soft:#b9cbd4; --muted:#8aa2b0;
   --brand:#3ec9b0; --brand-deep:#1f8a78; --brand-soft:#0f2f2b; --brand-line:#1d4a44;

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OpenShelter — open-source multi-hazard shelter design advisor</title>
-<meta name="description" content="Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo — runs in your browser, nothing uploaded.">
-<meta property="og:title" content="OpenShelter — open-source multi-hazard shelter design advisor">
-<meta property="og:description" content="Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo — runs in your browser, nothing uploaded.">
+<title>OpenShelter, open-source multi-hazard shelter design advisor</title>
+<meta name="description" content="Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo, runs in your browser, nothing uploaded.">
+<meta property="og:title" content="OpenShelter, open-source multi-hazard shelter design advisor">
+<meta property="og:description" content="Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo, runs in your browser, nothing uploaded.">
 <meta property="og:url" content="https://manyaai.github.io/openshelter/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://manyaai.github.io/openshelter/og-image.png">
@@ -31,10 +31,9 @@
   <a class="brand" href="index.html"><img src="logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
   <nav class="nav" aria-label="Main navigation">
-    <a href="" class="active" aria-current="page">Home</a>
+    <a href="index.html" class="active" aria-current="page">Home</a>
     <a href="how/">How it works</a>
-    <a href="#demo">Live demo</a>
-    <a href="briefs/">Brief gallery</a>
+    <a href="briefs/">Example plans</a>
     <a href="trust/">Data & trust</a>
     <a href="mission/">Mission</a>
     <a href="contribute/">Contribute</a>
@@ -46,53 +45,53 @@
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Digital public infrastructure · AGPL-3.0</span>
   <h1>Every community deserves a shelter designed for <em>its</em> hazards.</h1>
-  <p class="lead">OpenShelter turns public hazard data and published building codes into plain-language, printable design briefs — where <b>every recommendation cites the clause and the measurement behind it.</b> No black boxes. No fees. No vendor lock-in.</p>
+  <p class="lead">OpenShelter turns public hazard data and published building codes into plain-language, printable design briefs, where <b>every recommendation cites the clause and the measurement behind it.</b> No black boxes. No fees. No vendor lock-in.</p>
   <div class="hero-actions">
     <a class="btn btn-primary" href="#demo">Try the live demo →</a>
     <a class="btn btn-outline" href="briefs/">See example briefs</a>
   </div>
   <div class="trust-row">
-    <span class="pill">🔒 Runs in your browser — nothing uploaded</span>
+    <span class="pill">🔒 Runs in your browser, nothing uploaded</span>
     <span class="pill">📜 Every rule cites its code clause</span>
-    <span class="pill">🧮 Deterministic — same input, same brief, forever</span>
+    <span class="pill">🧮 Deterministic, same input, same brief, forever</span>
     <span class="pill">📶 Works offline on a field laptop</span>
   </div>
   <div class="hero-map" id="hzmap" role="img" aria-label="World map of famous high-risk sites; click any marker to generate a brief"></div>
-  <p class="map-note" id="maphint" style="display:none">Click a glowing marker — or anywhere on the map — to generate that site's design brief instantly.</p>
+  <p class="map-note" id="maphint" style="display:none">Click a glowing marker, or anywhere on the map, to generate that site's design brief instantly.</p>
 </div></section>
 
 <div class="stats"><div class="wrap"><div class="grid">
   <div class="stat"><b>5</b><span>building-code profiles shipped (EU · US · India · Philippines · Sphere)</span></div>
   <div class="stat"><b>2</b><span>real public-domain hazard datasets wired in (USGS, NOAA)</span></div>
-  <div class="stat"><b>100%</b><span>open source — inspectable JSON rules, diffable in git</span></div>
+  <div class="stat"><b>100%</b><span>open source, inspectable JSON rules, diffable in git</span></div>
   <div class="stat"><b>$0</b><span>forever free for governments, NGOs and classrooms</span></div>
 </div></div></div>
 
 <section id="demo" class="reveal"><div class="wrap"><div class="card demo-card">
-  <h2>Generate a design brief — in your browser, right now</h2>
+  <h2>Generate a design brief, in your browser, right now</h2>
   <p class="hint" id="datastatus">Loading hazard data…</p>
   <form class="demo" id="f">
     <div class="fld" style="grid-column:1/-1"><label for="preset">Pick a famous high-risk site (auto-generates)</label>
       <select id="preset">
-        <option value="">— or enter coordinates manually below —</option>
-        <option value="23.81,90.41">Dhaka, Bangladesh — flood / cyclone / heat</option>
-        <option value="14.60,120.98">Manila, Philippines — typhoon / earthquake</option>
-        <option value="41.01,28.98">Istanbul, Türkiye — earthquake</option>
-        <option value="18.54,-72.26">Port-au-Prince, Haiti — earthquake / hurricane</option>
-        <option value="21.43,92.01">Cox's Bazar, Bangladesh — cyclone / landslide</option>
-        <option value="19.43,-99.13">Mexico City, Mexico — seismic</option>
-        <option value="35.68,139.65">Tokyo, Japan — earthquake / typhoon</option>
-        <option value="-19.83,34.86">Beira, Mozambique — cyclone / flood</option>
-        <option value="-18.12,178.45">Suva, Fiji — cyclone / sea-level rise</option>
-        <option value="-6.21,106.85">Jakarta, Indonesia — earthquake / flood</option>
+        <option value="">- or enter coordinates manually below -</option>
+        <option value="23.81,90.41">Dhaka, Bangladesh, flood / cyclone / heat</option>
+        <option value="14.60,120.98">Manila, Philippines, typhoon / earthquake</option>
+        <option value="41.01,28.98">Istanbul, Türkiye, earthquake</option>
+        <option value="18.54,-72.26">Port-au-Prince, Haiti, earthquake / hurricane</option>
+        <option value="21.43,92.01">Cox's Bazar, Bangladesh, cyclone / landslide</option>
+        <option value="19.43,-99.13">Mexico City, Mexico, seismic</option>
+        <option value="35.68,139.65">Tokyo, Japan, earthquake / typhoon</option>
+        <option value="-19.83,34.86">Beira, Mozambique, cyclone / flood</option>
+        <option value="-18.12,178.45">Suva, Fiji, cyclone / sea-level rise</option>
+        <option value="-6.21,106.85">Jakarta, Indonesia, earthquake / flood</option>
       </select></div>
     <div class="fld"><label for="lat">Latitude</label><input id="lat" type="number" step="0.01" min="-90" max="90" value="23.81" required></div>
     <div class="fld"><label for="lon">Longitude</label><input id="lon" type="number" step="0.01" min="-180" max="180" value="90.39" required></div>
     <div class="fld"><label for="code">Building code profile</label><select id="code">
-        <option value="in-is139-is4352">India — IS 139 / IS 4352</option>
-        <option value="eu-eurocode-8">EU — Eurocode 8</option>
-        <option value="us-iebc">USA — IBC / ASCE 7</option>
-        <option value="ph-nscc">Philippines — NSCP</option>
+        <option value="in-is139-is4352">India, IS 139 / IS 4352</option>
+        <option value="eu-eurocode-8">EU, Eurocode 8</option>
+        <option value="us-iebc">USA, IBC / ASCE 7</option>
+        <option value="ph-nscc">Philippines, NSCP</option>
         <option value="sphere-humanitarian">Sphere humanitarian standards</option>
       </select></div>
     <div class="fld"><label for="pop">People sheltered</label><input id="pop" type="number" min="0" value="5000"></div>
@@ -100,12 +99,12 @@
     <button class="go" type="submit">Generate design brief</button>
   </form>
   <div id="out" aria-live="polite"></div>
-  <div class="disclaimer"><b>Honesty policy.</b> Earthquake &amp; cyclone scores come from real public-domain data (USGS ComCat M6.0+ 1990–2026; NOAA IBTrACS climatology). Flood, heat, drought and landslide values are labelled demo placeholders until national agencies contribute authoritative layers. OpenShelter produces pre-design guidance, not stamped engineering — a licensed local engineer must verify structural calculations before construction.</div>
+  <div class="disclaimer"><b>Honesty policy.</b> Earthquake &amp; cyclone scores come from real public-domain data (USGS ComCat M6.0+ 1990-2026; NOAA IBTrACS climatology). Flood, heat, drought and landslide values are labelled demo placeholders until national agencies contribute authoritative layers. OpenShelter produces pre-design guidance, not stamped engineering, a licensed local engineer must verify structural calculations before construction.</div>
 </div></div></section>
 
 <section class="tight reveal"><div class="wrap measure">
   <div class="sec-head"><span class="kicker">The problem in one paragraph</span><h2>Safe knowledge exists. It just isn't connected.</h2></div>
-  <p style="color:var(--ink-soft);font-size:1.08rem">Billions of dollars flow into emergency shelters every year. Most are designed from copy-paste templates that ignore local codes and local hazards — so the same "safe" shelter that survives an earthquake in one country collapses in a flood somewhere else. Hazard maps exist. Building codes exist. Nothing free and auditable connected them — <b>until now.</b></p>
+  <p style="color:var(--ink-soft);font-size:1.08rem">Billions of dollars flow into emergency shelters every year. Most are designed from copy-paste templates that ignore local codes and local hazards, so the same "safe" shelter that survives an earthquake in one country collapses in a flood somewhere else. Hazard maps exist. Building codes exist. Nothing free and auditable connected them, <b>until now.</b></p>
   <p><a class="btn btn-outline btn-sm" href="how/">Read the full explanation →</a></p>
 </div></section>
 
@@ -116,8 +115,8 @@
       <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
       <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
       <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
-    <div><h4>Explore</h4><a href="index.html#demo">Live demo</a><a href="briefs/">Brief gallery</a><a href="how/">How it works</a><a href="trust/">Data &amp; trust</a><a href="mission/">Mission &amp; vision</a></div>
-    <div><h4>Build</h4><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a><a href="contribute/">Ways to help</a></div>
+    <div><h4>Explore</h4><a href="briefs/">Example plans</a><a href="how/">How it works</a><a href="trust/">Trust &amp; data</a><a href="mission/">Mission</a><a href="contribute/">Get involved</a></div>
+    <div><h4>Use it</h4><a href="index.html#demo">Try the live demo</a><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
     <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
 
   </div>

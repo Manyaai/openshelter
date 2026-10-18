@@ -1,15 +1,15 @@
 /* ============================================================
-   OpenShelter design system v2 — "Trusted civic"
+   OpenShelter design system v2 - "Trusted civic"
    Type scale, spacing tokens, one source of truth for all pages
    ============================================================ */
 :root{
-  /* palette — deep teal + warm sand, government-grade restraint */
+  /* palette - deep teal + warm sand, government-grade restraint */
   --ink:#0c2430; --ink-soft:#33505e; --muted:#61798a;
   --brand:#0b6e66; --brand-deep:#08524c; --brand-soft:#e2f0ee; --brand-line:#b7dcd6;
   --accent:#c2610a; --accent-soft:#fdf1e2;
   --paper:#f6f5f0; --card:#ffffff; --line:#e4e1d8; --line-strong:#cfcabd;
   --ok:#166534; --ok-bg:#dcfce7; --warn:#92400e; --warn-bg:#fef3c7; --bad:#b91c1c; --bad-bg:#fee2e2; --info:#075985; --info-bg:#e0f2fe;
-  /* type — Inter (self-hosted) for UI, Newsreader serif for display headings */
+  /* type - Inter (self-hosted) for UI, Newsreader serif for display headings */
   --font:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   --font-display:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --fs-hero:clamp(2.1rem,5.2vw,3.6rem); --fs-h2:clamp(1.5rem,3vw,2.2rem); --fs-body:1.06rem;
@@ -128,7 +128,7 @@ details{border-bottom:1px solid var(--line);padding:var(--s2) 0}
 details:last-of-type{border-bottom:0}
 summary{cursor:pointer;font-weight:700;font-size:1.05rem;list-style:none;display:flex;gap:.6rem;align-items:baseline}
 summary::before{content:"+";color:var(--brand);font-weight:800;font-size:1.2rem;line-height:1}
-details[open] summary::before{content:"–"}
+details[open] summary::before{content:"-"}
 details .d-body{color:var(--ink-soft);margin:.6rem 0 .2rem;padding-left:1.4rem}
 details .d-body ol,details .d-body ul{padding-left:1.2rem}
 details .d-body li{margin-bottom:.4rem}
