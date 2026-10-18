@@ -16,15 +16,15 @@ SITE = ROOT / "site"
 # ---------------------------------------------------------------- shared chrome
 NAV = [
     ("Home", "/"),
-    ("Live demo", "/#demo"),
     ("How it works", "/how/"),
+    ("Live demo", "/#demo"),
     ("Brief gallery", "/briefs/"),
     ("Data & trust", "/trust/"),
     ("Mission", "/mission/"),
     ("Contribute", "/contribute/"),
 ]
 ACTIVE_KEY = {  # page id -> nav label that should be marked active
-    "home": "Home", "demo": "Live demo", "how": "How it works",
+    "home": "Home", "how": "How it works",
     "briefs": "Brief gallery", "trust": "Data & trust",
     "mission": "Mission", "contribute": "Contribute",
 }
@@ -84,8 +84,8 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 {extra_head}
 </head>
 <body>
+<main id="main">
 <a class="skip" href="#main">Skip to content</a>
-<div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="{p}mission/">read our story</a></div>
 <header class="site-header"><div class="wrap">
   <a class="brand" href="{p}index.html"><img src="{p}logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
@@ -95,7 +95,6 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
     <a class="btn-nav" href="{REPO}">GitHub ★</a></span>
   </nav>
 </div></header>
-<main id="main">
 {body}
 </main>
 <footer class="site"><div class="wrap">

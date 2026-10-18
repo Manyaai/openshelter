@@ -237,3 +237,20 @@ main.doc{padding-top:0}
 .sitebar{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#cfe3ea;padding:.55rem 1.2rem;font-size:.88rem}
 .sitebar a{color:#8fd3c9;text-decoration:none;font-weight:700}
 @media print{.sitebar,.no-print{display:none!important}}
+
+/* ---------- v4: declutter pass ---------- */
+.topbar{display:none!important}
+main#main{min-height:55vh}
+.site-header .wrap{padding-top:.85rem;padding-bottom:.85rem}
+.hero{padding:var(--s4) 0 var(--s3)}
+.hero-map{height:300px}
+.stats{background:transparent;color:inherit;border-bottom:1px solid var(--line);border-top:1px solid var(--line);padding:var(--s3) 0}
+.stats .stat b{color:var(--brand-deep);font-size:1.9rem;font-family:var(--font-display)}
+.stats .stat span{color:var(--ink-soft);opacity:1;font-size:.86rem}
+section{padding:var(--s4) 0}
+.demo-card{padding:var(--s3)}
+form.demo{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.disclaimer{margin-top:var(--s2);font-size:.84rem}
+.trust-row{gap:.45rem;margin-top:var(--s2)}
+footer.site{margin-top:var(--s4);padding:var(--s3) 0 var(--s2)}
+@media(max-width:820px){.hero h1{max-width:100%}.stats .grid{grid-template-columns:repeat(2,1fr);gap:var(--s2)}}
