@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data sources &amp; honesty policy — OpenShelter</title>
+<meta name="description" content="Real USGS/NOAA data where available, clearly-labelled demo placeholders elsewhere, cited code clauses everywhere. FAQ on engineering liability, governance and funding.">
+<meta property="og:title" content="Data sources &amp; honesty policy — OpenShelter">
+<meta property="og:description" content="Real USGS/NOAA data where available, clearly-labelled demo placeholders elsewhere, cited code clauses everywhere. FAQ on engineering liability, governance and funding.">
+<meta property="og:url" content="https://manyaai.github.io/openshelter/trust/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://manyaai.github.io/openshelter/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6e66">
+<link rel="canonical" href="https://manyaai.github.io/openshelter/trust/">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="../css/inter.css"></noscript>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dark.css">
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="../mission/">read our story</a></div>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="../">Home</a>
+    <a href="../#demo">Live demo</a>
+    <a href="../how/">How it works</a>
+    <a href="../briefs/">Brief gallery</a>
+    <a href="../trust/" class="active" aria-current="page">Data & trust</a>
+    <a href="../mission/">Mission</a>
+    <a href="../contribute/">Contribute</a>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a></span>
+  </nav>
+</div></header>
+<main id="main">
+
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Transparency</span><h1>Data sources &amp; honesty policy</h1>
+  <p class="lead">Trust is not claimed here; it is evidenced. Every layer below is either public-domain data with a citation, a published standard with a clause number, or explicitly labelled a demo placeholder. This transparency <i>is</i> the product.</p>
+</div></section>
+<section class="tight"><div class="wrap measure-wide">
+  <div class="card" style="padding:var(--s3)">
+  <table class="src">
+    <tr><th>Layer</th><th>Source used today</th><th>Status</th></tr>
+    <tr><td><b>Earthquake</b></td><td><a href="https://earthquake.usgs.gov/data/comcat/">USGS ComCat</a> catalogue, M6.0+ events 1990–2026 (public domain), decay-kernel interpolated to a 0.5° grid shipped with the site</td><td><span class="badge pass">REAL DATA</span></td></tr>
+    <tr><td><b>Cyclone</b></td><td><a href="https://www.ncei.noaa.gov/products/international-best-track-analysis-system">NOAA IBTrACS</a> tropical-cyclone best-track climatology (public domain), storm-track density by basin</td><td><span class="badge pass">REAL DATA</span></td></tr>
+    <tr><td><b>Flood / Heat / Drought / Landslide</b></td><td>Deterministic synthetic field for demonstration; swap-in interface ready for GEM Risk Library &amp; Copernicus EMS rasters</td><td><span class="badge review">DEMO — clearly labelled</span></td></tr>
+    <tr><td><b>Building codes</b></td><td>5 curated profiles citing published standards: Eurocode 8 &amp; EPBD recast, IBC/ASCE 7/FEMA P-361, IS 139/IS 4352 &amp; NSCP 2010, Sphere Handbook</td><td><span class="badge pass">CITED CLAUSES</span></td></tr>
+  </table></div>
+</div></section>
+<section class="tight reveal"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Accountability</span><h2>Our honesty commitments</h2></div>
+  <ul class="checks">
+    <li>We label demo values as demo values — inside the generated brief itself, not just in a footnote.</li>
+    <li>We publish the full derivation: dataset, version, date fetched, interpolation method.</li>
+    <li>We never present output as stamped engineering; every brief names the licensed-engineer step.</li>
+    <li>We accept corrections like Wikipedia: fix a clause, merge a PR, everyone benefits.</li>
+    <li>The browser demo uploads nothing. The CLI needs no internet once installed.</li>
+  </ul>
+</div></section>
+<section class="tight reveal" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">FAQ</span><h2>Questions reviewers actually ask</h2></div>
+  <details><summary>Is this a replacement for engineers or consultants?</summary><div class="d-body"><p>No — and we refuse to pretend otherwise. OpenShelter produces the pre-design brief: hazard-appropriate systems, code-cited constraints, and compliance checks. A licensed local engineer performs the structural calculations and signs the drawings. Our aim is to make that engagement cheaper and better-informed, not optional.</p></div></details>
+  <details><summary>Why are some hazard values still "demo"?</summary><div class="d-body"><p>Flood and heat authority comes from national agencies, not from us inventing numbers. Rather than ship unlabeled guesses, we show clearly-marked placeholders and provide the plug-in interface (and funding roadmap) for agencies to contribute their own raster layers via pull request.</p></div></details>
+  <details><summary>Who governs the code profiles? Could someone sabotage them?</summary><div class="d-body"><p>Profiles are JSON files with citations, reviewed in pull requests, validated by CI, and intended to be co-owned by each country's standards community. Governance structure is documented in docs/GOVERNANCE.md; changes are traceable by git history like Wikipedia revisions.</p></div></details>
+  <details><summary>How is this funded? What's the catch?</summary><div class="d-body"><p>AGPL-3.0 means the tool is free forever; sustainability comes from paid localization contracts (a ministry commissions its own code profile and hosted instance), foundation grants (Sendai-aligned DRR funding), and dual licensing for commercial integrators. There is no user paywall and no data monetisation — see docs/FUNDING.md.</p></div></details>
+  <details><summary>Can a government rely on this in procurement?</summary><div class="d-body"><p>The briefs are designed to be attached to tender documents as <i>requirements definitions</i> — deterministic, version-stamped and citable. Procurement law differs by country; consult your legal team, but the audit trail (rule → hazard value → clause) is exactly what evaluation committees ask for.</p></div></details>
+  <details><summary>Does it work without internet?</summary><div class="d-body"><p>Yes. The Python CLI is stdlib-only and ships its grids as JSON; the browser demo caches everything on first load. Field teams routinely operate on prepaid connections — offline-first is a requirement, not a nicety.</p></div></details>
+</div></section>
+<section class="tight reveal"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Alignment</span><h2>Frameworks this project supports</h2></div>
+  <div class="grid grid-3">
+    <div class="card tile"><h3>🌐 Sendai Framework</h3><p>Target E: increase national DRR strategies. OpenShelter turns a country's own hazard data and codes into implementable shelter requirements.</p></div>
+    <div class="card tile"><h3>🇪🇺 EU open-source doctrine</h3><p>Federal Source Code Policy-style reuse, "public code" procurement preferences, Horizon Europe digital-public-infrastructure calls.</p></div>
+    <div class="card tile"><h3>🤝 Sphere &amp; CHS</h3><p>Humanitarian standards encoded directly: shelter space per person, WASH ratios, and accessibility checks ship in the default profile.</p></div>
+  </div>
+  <p style="margin-top:var(--s3)"><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Full standards mapping →</a></p>
+</div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+  <div class="grid">
+    <div><h4>OpenShelter</h4><p class="f-tag">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p>
+      <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
+      <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
+      <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
+    <div><h4>Explore</h4><a href="../index.html#demo">Live demo</a><a href="../briefs/">Brief gallery</a><a href="../how/">How it works</a><a href="../trust/">Data &amp; trust</a><a href="../mission/">Mission &amp; vision</a></div>
+    <div><h4>Build</h4><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a><a href="../contribute/">Ways to help</a></div>
+    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
+
+  </div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
+</div></footer>
+<button class="totop" aria-label="Back to top">↑</button>
+<script src="../js/ui.js"></script>
+
+</body>
+</html>

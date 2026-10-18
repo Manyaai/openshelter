@@ -5,32 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mission, Vision &amp; Story — OpenShelter</title>
 <meta name="description" content="Why OpenShelter exists: our mission, vision, story, values and the road ahead.">
-<meta property="og:title" content="OpenShelter — Mission & Vision">
-<meta property="og:description" content="A world where 'we couldn't afford a safe design' is no longer a reason a shelter fails.">
+<meta property="og:title" content="Mission, Vision &amp; Story — OpenShelter">
+<meta property="og:description" content="Why OpenShelter exists: our mission, vision, story, values and the road ahead.">
 <meta property="og:url" content="https://manyaai.github.io/openshelter/mission/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://manyaai.github.io/openshelter/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6e66">
 <link rel="canonical" href="https://manyaai.github.io/openshelter/mission/">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<link rel="stylesheet" href="../css/dark.css">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="../css/inter.css"></noscript>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dark.css">
+
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="../mission/">read our story</a></div>
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="../"><img src="../logo.svg" alt="OpenShelter logo"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
   <nav class="nav" aria-label="Main navigation">
-    <a href="../#demo">Live demo</a><a href="../briefs/">Brief gallery</a><a href="../#how">How it works</a><a href="../#trust">Data &amp; trust</a>
-    <button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
-    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a>
+    <a href="../">Home</a>
+    <a href="../#demo">Live demo</a>
+    <a href="../how/">How it works</a>
+    <a href="../briefs/">Brief gallery</a>
+    <a href="../trust/">Data & trust</a>
+    <a href="../mission/" class="active" aria-current="page">Mission</a>
+    <a href="../contribute/">Contribute</a>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a></span>
   </nav>
 </div></header>
+<main id="main">
 
-<main id="main" class="doc">
-  <span class="eyebrow" style="display:inline-block;background:var(--brand-soft);color:var(--brand-deep);border:1px solid var(--brand-line);font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .9rem;border-radius:99px">Our reason for existing</span>
-  <h1>Mission, vision &amp; the story so far</h1>
-
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Our reason for existing</span><h1>Mission, vision &amp; the story so far</h1>
+  <p class="lead">A world where "we couldn't afford a safe design" is no longer a reason a shelter fails.</p>
+</div></section>
+<div class="wrap"><main class="doc" style="padding-left:0;padding-right:0">
   <div class="mv">
     <div><h3>Our mission</h3>Give every community — regardless of budget — the ability to design emergency shelters that respect their country's hazards and its own building codes, with every decision traceable to a public source.</div>
     <div><h3>Our vision</h3>A world where "we couldn't afford a safe design" is no longer a reason a shelter fails. Public safety knowledge stays public: open data in, auditable guidance out, forever free for governments, NGOs and classrooms.</div>
@@ -47,7 +63,7 @@
   <div class="card" style="padding:var(--s3)">
   <ul class="road">
     <li><b>v0.1 · The foundation.</b> Five machine-readable code profiles (Eurocode 8, IBC/ASCE 7, IS 139, NSCP, Sphere), a deterministic rule engine where every output cites its clause, a CLI that runs on stdlib-only Python, and full test coverage.</li>
-    <li><b>v0.2 · Real data + a public front door.</b> USGS earthquake and NOAA cyclone climatology wired into both the Python core and a browser demo. A live website, brief gallery, governance docs and a funding map published.</li>
+    <li><b>v0.2 · Real data + a public front door.</b> USGS earthquake and NOAA cyclone climatology wired into both the Python core and a browser demo. A live multi-page website, brief gallery, governance docs and a funding map published.</li>
     <li><b>Next · Country ownership.</b> Flood and heat layers contributed by national agencies through pull requests they control — the first ones are why we're talking to disaster-management ministries today.</li>
   </ul>
   </div>
@@ -77,13 +93,25 @@
   </ul>
   </div>
 
-  <p style="margin-top:var(--s4)"><a class="btn btn-primary" href="../#demo">Try the live demo →</a>&nbsp;&nbsp;<a class="btn btn-outline" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Partner with us / funding pathways</a></p>
-</main>
+  <p style="margin-top:var(--s4)"><a class="btn btn-primary" href="../index.html#demo">Try the live demo →</a>&nbsp;&nbsp;<a class="btn btn-outline" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Partner with us / funding pathways</a></p>
+</main></div>
 
+</main>
 <footer class="site"><div class="wrap">
-  <div class="fine" style="border-top:none;margin-top:0">© OpenShelter contributors · AGPL-3.0 · <a href="../">home</a> · <a href="https://github.com/Manyaai/openshelter">GitHub</a></div>
+  <div class="grid">
+    <div><h4>OpenShelter</h4><p class="f-tag">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p>
+      <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
+      <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
+      <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
+    <div><h4>Explore</h4><a href="../index.html#demo">Live demo</a><a href="../briefs/">Brief gallery</a><a href="../how/">How it works</a><a href="../trust/">Data &amp; trust</a><a href="../mission/">Mission &amp; vision</a></div>
+    <div><h4>Build</h4><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a><a href="../contribute/">Ways to help</a></div>
+    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
+
+  </div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
 </div></footer>
 <button class="totop" aria-label="Back to top">↑</button>
 <script src="../js/ui.js"></script>
+
 </body>
 </html>

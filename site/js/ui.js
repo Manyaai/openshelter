@@ -37,3 +37,12 @@
     tt.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
   }
 })();
+
+/* v3: mobile nav toggle */
+(function(){
+  const t = document.querySelector('.nav-toggle'), n = document.querySelector('.nav');
+  if (t && n) t.addEventListener('click', () => {
+    const open = n.classList.toggle('open');
+    t.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();

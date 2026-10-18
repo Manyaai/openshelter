@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contribute — OpenShelter</title>
+<meta name="description" content="Add your country&#x27;s building code as one JSON file, correct a number like Wikipedia, translate the interface, or pilot a municipal deployment.">
+<meta property="og:title" content="Contribute — OpenShelter">
+<meta property="og:description" content="Add your country&#x27;s building code as one JSON file, correct a number like Wikipedia, translate the interface, or pilot a municipal deployment.">
+<meta property="og:url" content="https://manyaai.github.io/openshelter/contribute/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://manyaai.github.io/openshelter/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6e66">
+<link rel="canonical" href="https://manyaai.github.io/openshelter/contribute/">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../css/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="../css/inter.css"></noscript>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dark.css">
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar">🌍 v0.2 shipped: real USGS earthquake &amp; NOAA cyclone data now power the demo · <a href="../mission/">read our story</a></div>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="OpenShelter logo: shelter roof with compliance checkmark"><span><b class="wordmark">OpenShelter</b><small>safer shelters, open by default</small></span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="../">Home</a>
+    <a href="../#demo">Live demo</a>
+    <a href="../how/">How it works</a>
+    <a href="../briefs/">Brief gallery</a>
+    <a href="../trust/">Data & trust</a>
+    <a href="../mission/">Mission</a>
+    <a href="../contribute/" class="active" aria-current="page">Contribute</a>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+    <a class="btn-nav" href="https://github.com/Manyaai/openshelter">GitHub ★</a></span>
+  </nav>
+</div></header>
+<main id="main">
+
+<section class="page-head"><div class="wrap measure-narrow">
+  <span class="kicker">Get involved</span><h1>Ten minutes, three ways — pick your difficulty</h1>
+  <p class="lead">OpenShelter's fragile part (legal code text) is designed to be owned by many hands. You don't need to write Python to make a shelter safer.</p>
+</div></section>
+<section class="tight"><div class="wrap">
+  <div class="grid grid-3">
+    <div class="card tile"><span class="lvl easy">EASY</span><h3>Fix a number like Wikipedia</h3><p>Every rule lives in plain JSON with citations. Spot a wrong threshold or missing clause? Edit the file, open a pull request, CI validates it. Non-coders can open an issue describing the fix and we'll pair with you.</p><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/issues/new/choose">Report a correction →</a></div>
+    <div class="card tile"><span class="lvl mid">MEDIUM</span><h3>Add your country's code</h3><p>One command scaffolds a validated profile:<br><code>python tools/new_code_profile.py --id bd-bnbc --jurisdiction BD --name "Bangladesh National Building Code"</code><br>Fill the JSON with clause references, run the validator, submit. We review within days and credit you (or your agency) in the profile metadata.</p><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contributing guide →</a></div>
+    <div class="card tile"><span class="lvl hard">ANY SIZE</span><h3>Translate &amp; teach</h3><p>Bengali, Spanish and French first — help a non-English-speaking municipality use the tool. Or adopt the CLI in a risk-engineering studio: students shipping a real upstream code profile beats another toy assignment.</p><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/discussions">Start a discussion →</a></div>
+  </div>
+</div></section>
+<section class="tight reveal" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">For institutions</span><h2>Agencies, ministries &amp; NGOs</h2></div>
+  <ul class="checks">
+    <li><b>Own your numbers.</b> Publish your national flood/heat grids as a provider plugin — your scientists review the PR, your ministry gets named provenance in every brief.</li>
+    <li><b>Commission a profile.</b> Fund the encoding of your building code (typically weeks of work, not months) and it stays open for every citizen forever.</li>
+    <li><b>Pilot a deployment.</b> We're looking for 2–3 pilot municipalities to run real reconstruction briefs end-to-end and publish the results.</li>
+  </ul>
+  <p><a class="btn btn-primary" href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding &amp; partnership pathways →</a></p>
+</div></section>
+<section class="tight reveal"><div class="wrap measure">
+  <div class="sec-head"><span class="kicker">Good first issues</span><h2>Where contributors usually start</h2></div>
+  <ol class="steps">
+    <li><b>Harden the raster interface</b> — wire the GEM Risk Library / Copernicus DEM providers into <code>core/hazard.py</code> (interface already exists).</li>
+    <li><b>Profile clinics</b> — pair with a standards engineer to encode BNBC (Bangladesh), NBC (Nepal), or Caribbean Uniform Building Code.</li>
+    <li><b>PDF export</b> — one clean print-ready template for briefs, requested by every pilot conversation so far.</li>
+    <li><b>i18n strings</b> — extract UI copy into JSON locales; Bengali translation is drafted and waiting.</li>
+  </ol>
+  <p style="color:var(--muted);font-size:.9rem">Code of conduct: be kind, cite sources, assume good faith. AGPL keeps every contribution open — that's the deal, and it's why people contribute.</p>
+</div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+  <div class="grid">
+    <div><h4>OpenShelter</h4><p class="f-tag">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p>
+      <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
+      <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
+      <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
+    <div><h4>Explore</h4><a href="../index.html#demo">Live demo</a><a href="../briefs/">Brief gallery</a><a href="../how/">How it works</a><a href="../trust/">Data &amp; trust</a><a href="../mission/">Mission &amp; vision</a></div>
+    <div><h4>Build</h4><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://github.com/Manyaai/openshelter/blob/main/CONTRIBUTING.md">Contribute a code profile</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a><a href="../contribute/">Ways to help</a></div>
+    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
+
+  </div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
+</div></footer>
+<button class="totop" aria-label="Back to top">↑</button>
+<script src="../js/ui.js"></script>
+
+</body>
+</html>
