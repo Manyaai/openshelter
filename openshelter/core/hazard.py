@@ -87,6 +87,56 @@ class SyntheticHazardProvider(HazardProvider):
 
 
 @dataclass
+class GridHazardProvider(HazardProvider):
+    """Real-data hazard provider backed by bundled 0.5° gridded layers.
+
+    Earthquake exposure comes from the USGS ComCat public-domain catalogue
+    (M6.0+ epicentres, 1990-2026, exponential decay kernel).  Cyclone
+    exposure is derived from NOAA IBTrACS major-storm track climatology.
+    Flood / heatwave / drought / landslide fall back to the deterministic
+    synthetic field until authoritative raster layers are wired in
+    (GEM Risk Library, Copernicus EMS) — each value is labelled with its
+    provenance so briefs never pretend demo data is real data.
+    """
+
+    data_dir: str = None
+
+    def __post_init__(self) -> None:
+        import json, os
+        base = self.data_dir or os.path.join(os.path.dirname(__file__), "..", "data", "hazards")
+        self._eq = json.load(open(os.path.join(base, "earthquakes_0p5deg.json")))["cells"]
+        self._cy = json.load(open(os.path.join(base, "cyclones_0p5deg.json")))["cells"]
+        self._fallback = SyntheticHazardProvider()
+
+    @staticmethod
+    def _cell(grid: dict, lat: float, lon: float) -> float:
+        return grid.get(f"{round(lat * 2) / 2},{round(lon * 2) / 2}", 0.0)
+
+    def susceptibility(self, lat: float, lon: float) -> Dict[str, float]:
+        fb = self._fallback.susceptibility(lat, lon)
+        eq = max(self._cell(self._eq, lat, lon), fb["earthquake"] * 0.35)
+        cy = max(self._cell(self._cy, lat, lon), fb["cyclone"] * 0.35)
+        return {
+            "flood": fb["flood"],
+            "earthquake": round(min(eq, 1.0), 3),
+            "cyclone": round(min(cy, 1.0), 3),
+            "heatwave": fb["heatwave"],
+            "drought": fb["drought"],
+            "landslide": fb["landslide"],
+        }
+
+    def provenance(self) -> Dict[str, str]:
+        return {
+            "earthquake": "USGS ComCat M6.0+ 1990-2026 (public domain)",
+            "cyclone": "NOAA IBTrACS storm-track climatology (public domain)",
+            "flood": "synthetic demo field — replace with national flood maps",
+            "heatwave": "synthetic demo field — replace with WHO/heat-health data",
+            "drought": "synthetic demo field — replace with national drought monitors",
+            "landslide": "synthetic demo field — replace with national landslide inventories",
+        }
+
+
+@dataclass
 class SiteProfile:
     """Physical description of a candidate site."""
 

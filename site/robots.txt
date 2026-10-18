@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manyaai.github.io/openshelter/sitemap.xml

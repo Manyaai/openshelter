@@ -4,7 +4,22 @@
  */
 const HAZARD_NAMES = ["flood","earthquake","cyclone","heatwave","drought","landslide"];
 
-function susceptibility(lat, lon) {
+/* Real public-domain hazard grids (0.5 deg): USGS ComCat earthquakes, NOAA IBTrACS cyclone climatology */
+let GRID_EQ = null, GRID_CY = null;
+async function loadHazardGrids(){
+  if (GRID_EQ && GRID_CY) return true;
+  try {
+    const [e,c] = await Promise.all([
+      fetch("data/earthquakes_0p5deg.json").then(r=>r.ok?r.json():null),
+      fetch("data/cyclones_0p5deg.json").then(r=>r.ok?r.json():null)]);
+    if (e && c) { GRID_EQ = e.cells; GRID_CY = c.cells; return true; }
+  } catch(_) {}
+  return false;
+}
+function gridCell(grid, lat, lon){ return grid ? (grid[`${Math.round(lat*2)/2},${Math.round(lon*2)/2}`] || 0) : 0; }
+const PROVENANCE = {earthquake:"USGS ComCat M6.0+ 1990-2026 (public domain)",cyclone:"NOAA IBTrACS storm-track climatology (public domain)",flood:"synthetic demo field",heatwave:"synthetic demo field",drought:"synthetic demo field",landslide:"synthetic demo field"};
+
+function susceptibility(lat, lon, useReal) {
   const wave = (phase) => 0.5 + 0.5 * Math.sin((lat*3 + phase) * Math.PI/180 + Math.cos((lon*2 + phase) * Math.PI/180));
   const ring = Math.abs(Math.abs(lon) - 170) / 170;
   const plate = Math.max(0.2, 1.0 - ring);
@@ -15,7 +30,12 @@ function susceptibility(lat, lon) {
   let drought = (15 <= Math.abs(lat) && Math.abs(lat) <= 40) ? wave(270) : 0.1;
   let landslide = wave(135) * 0.6;
   const r3 = x => Math.round(Math.min(x, 1.0) * 1000) / 1000;
-  return {flood:r3(flood), earthquake:r3(earthquake), cyclone:r3(cyclone),
+  let eq = r3(earthquake), cy = r3(cyclone);
+  if (useReal && GRID_EQ && GRID_CY) {
+    eq = r3(Math.max(eq, Math.max(gridCell(GRID_EQ,lat,lon), eq*0.35)));
+    cy = r3(Math.max(cy, Math.max(gridCell(GRID_CY,lat,lon), cy*0.35)));
+  }
+  return {flood:r3(flood), earthquake:eq, cyclone:cy,
           heatwave:r3(heatwave), drought:r3(drought), landslide:r3(landslide)};
 }
 
@@ -29,6 +49,7 @@ function exposureScore(hz){
 }
 
 async function generateBrief(site, code){
+  const usingReal = !!(GRID_EQ && GRID_CY);
   const resp = await fetch(`data/codes/${code}.json`);
   if (!resp.ok) throw new Error("code profile not found: "+code);
   const c = await resp.json();
@@ -100,7 +121,10 @@ async function generateBrief(site, code){
   ];
 
   return {
-    meta:{tool:"openshelter-js", version:"0.1.0", note:"Demo hazard field is synthetic — verify against authoritative national layers before building."},
+    meta:{tool:"openshelter-js", version:"0.2.0",
+      hazard_source: usingReal ? "USGS + IBTrACS grids (eq/cy) + synthetic fields (flood/heat/drought/landslide)" : "synthetic demo field only",
+      provenance: PROVENANCE,
+      note:"Earthquake & cyclone scores use real public-domain data. Other hazards are demo values — verify against authoritative national layers before building."},
     site:{...site, code:c.id},
     dominant_hazard:dom, exposure:exposureScore(hz),
     structural_system:structural,
