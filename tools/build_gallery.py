@@ -1,6 +1,6 @@
 """Build the static brief gallery under site/briefs/ from examples/sites.csv."""
 from pathlib import Path
-import sys, json
+import sys, json, re
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from openshelter.core.hazard import SiteProfile, dominant_hazard, exposure_score
@@ -26,7 +26,7 @@ def main() -> int:
                                          distance_to_water_m=water, soil_bearing_kpa=soil,
                                          population_served=pop)
         brief = generate_brief(site, reg.get(code_id))
-        slug = name.lower().replace("'s", "s").replace(",", "").replace(" ", "-")
+        slug = re.sub(r"[^a-z0-9-]", "", name.lower().replace("'s", "s").replace(",", "").replace(" ", "-"))
         (outdir / f"{slug}.html").write_text(to_html(brief), encoding="utf-8")
         index.append({"name": name, "file": f"{slug}.html", "code": code_id,
                       "dominant_hazard": dominant_hazard(site),
