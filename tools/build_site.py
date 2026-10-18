@@ -42,14 +42,18 @@ def rel(prefix: str, path: str) -> str:
     depth = prefix.rstrip("/").count("/") + 1
     return "../" * depth + path.lstrip("./")
 
+# Minimal footer: one brand line + links that duplicate the nav (for pages
+# reached without JS or from search engines) + GitHub. No badge images, no
+# governance column (that content lives on the Trust page), no duplicates.
 FOOTER_COLS = """
-    <div><h4>OpenShelter</h4><p class="f-tag">Digital public infrastructure for resilient shelter design. AGPL-3.0 open source, forever free.</p>
-      <p class="f-badges"><a class="f-badge" href="https://github.com/Manyaai/openshelter/actions/workflows/ci.yml" rel="noopener"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/Manyaai/openshelter/ci.yml?label=tests&style=flat-square"></a>
-      <a class="f-badge" href="https://pypi.org/project/openshelter/" rel="noopener"><img alt="PyPI" src="https://img.shields.io/pypi/v/openshelter?style=flat-square"></a>
-      <a class="f-badge" href="https://github.com/Manyaai/openshelter/blob/main/LICENSE" rel="noopener"><img alt="License AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-teal?style=flat-square"></a></p></div>
-    <div><h4>Explore</h4><a href="{URL}how/">How it works</a><a href="{URL}demo/">Live demo</a><a href="{URL}briefs/">Example plans</a><a href="{URL}trust/">Trust &amp; data</a><a href="{URL}news/">Newsroom</a></div>
-    <div><h4>About</h4><a href="{URL}mission/">Mission &amp; story</a><a href="{URL}contribute/">Get involved</a><a href="https://github.com/Manyaai/openshelter">Source on GitHub</a><a href="https://pypi.org/project/openshelter/">pip install openshelter</a></div>
-    <div><h4>Governance</h4><a href="https://github.com/Manyaai/openshelter/blob/main/docs/GOVERNANCE.md">How decisions are made</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Standards alignment</a><a href="https://github.com/Manyaai/openshelter/blob/main/docs/FUNDING.md">Funding model</a><a href="https://github.com/Manyaai/openshelter/security/policy">Security policy</a></div>
+    <div class="f-brand"><a class="f-name" href="{URL}index.html">OpenShelter</a>
+      <p class="f-tag">Free, open-source tool for safer emergency shelters. AGPL-3.0 licensed.</p></div>
+    <nav class="f-links" aria-label="Footer">
+      <a href="{URL}how/">How it works</a>
+      <a href="{URL}trust/">Trust &amp; data</a>
+      <a href="{URL}contribute/">Get involved</a>
+      <a href="https://github.com/Manyaai/openshelter">GitHub</a>
+    </nav>
 """
 
 REPO = "https://github.com/Manyaai/openshelter"
@@ -135,9 +139,8 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 {pager(page_id, p)}
 </main>
 <footer class="site"><div class="wrap">
-  <div class="grid">{footer}
-  </div>
-  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer · Hazard data courtesy of USGS &amp; NOAA (public domain)</div>
+  <div class="f-row">{footer}</div>
+  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer</div>
 </div></footer>
 <button class="totop" aria-label="Back to top">↑</button>
 <script src="{p}js/ui.js"></script>

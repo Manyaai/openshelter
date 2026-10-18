@@ -235,9 +235,11 @@ ul.checks li:last-child{border-bottom:0}
 ul.checks li::before{content:"✓";position:absolute;left:.2rem;color:var(--brand);font-weight:800}
 .lvl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;border-radius:99px;padding:.18rem .7rem;margin-bottom:.55rem}
 .lvl.easy{background:var(--ok-bg);color:var(--ok)} .lvl.mid{background:var(--warn-bg);color:var(--warn)} .lvl.hard{background:var(--info-bg);color:var(--info)}
-footer.site .f-tag{margin:0 0 .8rem;color:#b9cbd4}
-footer.site .f-badges{margin:0;display:flex;gap:.5rem;flex-wrap:wrap}
-footer.site .f-badge img{height:20px}
+footer.site .f-tag{margin:.35rem 0 0;color:#b9cbd4}
+footer.site .f-row{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);align-items:baseline;justify-content:space-between}
+footer.site .f-name{font-weight:800;font-size:1.05rem;color:#fff;display:inline-block;padding:0}
+footer.site .f-links{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}
+footer.site .f-links a{display:inline;padding:0}
 main.doc{padding-top:0}
 
 /* ---------- sitebar on printable briefs ---------- */
