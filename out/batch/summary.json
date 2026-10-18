@@ -1,0 +1,42 @@
+[
+  {
+    "lat": 10.5,
+    "lon": 123.9,
+    "dominant_hazard": "flood",
+    "exposure": 0.299,
+    "critical_measures": 1,
+    "structural_system": "load-bearing masonry/RSS with ring beam"
+  },
+  {
+    "lat": -6.91,
+    "lon": 107.61,
+    "dominant_hazard": "earthquake",
+    "exposure": 0.29,
+    "critical_measures": 1,
+    "structural_system": "confined-masonry or RC frame, ductile detailing"
+  },
+  {
+    "lat": 23.81,
+    "lon": 90.39,
+    "dominant_hazard": "heatwave",
+    "exposure": 0.375,
+    "critical_measures": 2,
+    "structural_system": "load-bearing masonry/RSS with ring beam"
+  },
+  {
+    "lat": 41.01,
+    "lon": 28.98,
+    "dominant_hazard": "flood",
+    "exposure": 0.247,
+    "critical_measures": 1,
+    "structural_system": "load-bearing masonry/RSS with ring beam"
+  },
+  {
+    "lat": 19.43,
+    "lon": -99.13,
+    "dominant_hazard": "heatwave",
+    "exposure": 0.371,
+    "critical_measures": 1,
+    "structural_system": "load-bearing masonry/RSS with ring beam"
+  }
+]

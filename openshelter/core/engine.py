@@ -163,7 +163,7 @@ def generate_brief(site: SiteProfile, code: CodeProfile) -> DesignBrief:
         brief.recommendations.append(Recommendation(
             "protection",
             "Provide at least one step-free, lockable, internally-connecting family unit",
-            "Sphere Standard 2 (Inclusive design) — recommended even where not codified",
+            "Sphere Standard 2 (Inclusive design) - recommended even where not codified",
             priority=2, cost_band="low"))
 
     # ---- Compliance checks (machine-verifiable) -----------------------------------

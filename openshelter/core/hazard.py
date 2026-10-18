@@ -6,7 +6,7 @@ browser via Pyodide.  It combines openly licensed global datasets
 (GEM hazard layers, Copernicus land cover, FAO soil grids, etc.) into a
 transparent, versioned "hazard fingerprint" for a given location.
 
-The scores are intentionally simple, deterministic and auditable —
+The scores are intentionally simple, deterministic and auditable -
 governments need to be able to reproduce every number in a public
 procurement or subsidy decision.
 """
@@ -95,7 +95,7 @@ class GridHazardProvider(HazardProvider):
     exposure is derived from NOAA IBTrACS major-storm track climatology.
     Flood / heatwave / drought / landslide fall back to the deterministic
     synthetic field until authoritative raster layers are wired in
-    (GEM Risk Library, Copernicus EMS) — each value is labelled with its
+    (GEM Risk Library, Copernicus EMS) - each value is labelled with its
     provenance so briefs never pretend demo data is real data.
     """
 
@@ -129,10 +129,10 @@ class GridHazardProvider(HazardProvider):
         return {
             "earthquake": "USGS ComCat M6.0+ 1990-2026 (public domain)",
             "cyclone": "NOAA IBTrACS storm-track climatology (public domain)",
-            "flood": "synthetic demo field — replace with national flood maps",
-            "heatwave": "synthetic demo field — replace with WHO/heat-health data",
-            "drought": "synthetic demo field — replace with national drought monitors",
-            "landslide": "synthetic demo field — replace with national landslide inventories",
+            "flood": "synthetic demo field - replace with national flood maps",
+            "heatwave": "synthetic demo field - replace with WHO/heat-health data",
+            "drought": "synthetic demo field - replace with national drought monitors",
+            "landslide": "synthetic demo field - replace with national landslide inventories",
         }
 
 

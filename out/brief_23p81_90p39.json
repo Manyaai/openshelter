@@ -1,0 +1,110 @@
+{
+  "schema": "openshelter.brief/0.1",
+  "site": {
+    "lat": 23.81,
+    "lon": 90.39,
+    "elevation_m": 0.0,
+    "distance_to_water_m": 5000.0,
+    "soil_bearing_kpa": 150.0,
+    "population_served": 5000,
+    "hazards": {
+      "flood": 0.622,
+      "earthquake": 0.347,
+      "cyclone": 0.11,
+      "heatwave": 0.939,
+      "drought": 0.334,
+      "landslide": 0.023
+    }
+  },
+  "code": {
+    "id": "in-is139-is4352",
+    "name": "IS 13932 (cyclone-resistant buildings) + IS 4352/IS 1893 (earthquake) - National Building Code of India",
+    "jurisdiction": "in",
+    "standards": [
+      "IS 13932:2016",
+      "IS 1893-1:2016",
+      "IS 875 loads",
+      "CPHEEO water standards"
+    ],
+    "min_pga_g": 0.24,
+    "wind_speed_kmh": 215.0,
+    "flood_return_period_yr": 50,
+    "snow_load_knm2": 0.0,
+    "thermal_min_note": "ECBC 2017 (Compliant Comfort) for climate zones",
+    "accessibility": true,
+    "notes": "Wind speeds per IS 875-3 basic wind map; coastal Bay-of-Bengal districts require cyclone-resilient detailing."
+  },
+  "structural_system": "load-bearing masonry/RSS with ring beam",
+  "strategies": {
+    "energy": "off-grid PV solar",
+    "water": "rainwater harvesting (opportunistic)",
+    "sanitation": "ventilated improved pit (VIP) or composting toilet; never discharge into flood zone",
+    "thermal": "high-mass + shade"
+  },
+  "recommendations": [
+    {
+      "topic": "siting",
+      "measure": "Raise finished floor >= 0.5 m above modelled design flood level, or select alternate parcel",
+      "reason": "Flood susceptibility 0.62; code expects protection for a 50-year return period event",
+      "priority": 1,
+      "cost_band": "medium"
+    },
+    {
+      "topic": "thermal",
+      "measure": "Cool-roof (SRI>=78), external shading, night-purge ventilation; target indoor <=35C during heat alert",
+      "reason": "Heatwave susceptibility 0.94. Aligns with WHO shelter guidance and EPBD-style nearly-zero-energy intent where applicable",
+      "priority": 1,
+      "cost_band": "low"
+    },
+    {
+      "topic": "protection",
+      "measure": "Step-free entrance, 900 mm door clear width, accessible WASH cubicle",
+      "reason": "Mandatory under 'IS 13932 (cyclone-resistant buildings) + IS 4352/IS 1893 (earthquake) - National Building Code of India' accessibility provisions",
+      "priority": 1,
+      "cost_band": "low"
+    },
+    {
+      "topic": "sanitation",
+      "measure": "ventilated improved pit (VIP) or composting toilet; never discharge into flood zone",
+      "reason": "Sphere Standards WASH minimum requirements (20 L/person/day, 4.6 m2 shelter/person); flood/drought aware placement",
+      "priority": 2,
+      "cost_band": "low"
+    },
+    {
+      "topic": "energy",
+      "measure": "Roof-mounted PV >= 200 W/person-served-day with battery; supports cooling and comms",
+      "reason": "High irradiance at this latitude; Sphere + IASC mental-health guidance on lighting and charging facilities",
+      "priority": 2,
+      "cost_band": "medium"
+    },
+    {
+      "topic": "structure",
+      "measure": "Reinforced ring beam at roof level; controlled quality of masonry units",
+      "reason": "Baseline robustness for moderate multi-hazard exposure (aggregate exposure 0.38)",
+      "priority": 3,
+      "cost_band": "medium"
+    }
+  ],
+  "compliance_checks": [
+    {
+      "check": "design PGA meets code",
+      "passed": false,
+      "detail": "modelled demand ~0.17 g vs required >= 0.24 g"
+    },
+    {
+      "check": "design wind meets code",
+      "passed": true,
+      "detail": "215 km/h vs required >= 215 km/h"
+    },
+    {
+      "check": "floor elevation above water proximity threshold",
+      "passed": true,
+      "detail": "elevation 0.0 m, distance to water 5000.0 m"
+    },
+    {
+      "check": "soil bearing adequate for chosen system",
+      "passed": true,
+      "detail": "150.0 kPa reported"
+    }
+  ]
+}

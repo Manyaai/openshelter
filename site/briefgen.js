@@ -1,6 +1,6 @@
-/* OpenShelter brief generator — faithful JS port of openshelter/core/{hazard,codes,engine}.py v0.1.0
+/* OpenShelter brief generator - faithful JS port of openshelter/core/{hazard,codes,engine}.py v0.1.0
  * Deterministic, dependency-free, runs entirely in the browser.
- * NOTE: demo hazard field is synthetic (same as Python SyntheticHazardProvider) — NOT for operational decisions.
+ * NOTE: demo hazard field is synthetic (same as Python SyntheticHazardProvider) - NOT for operational decisions.
  */
 const HAZARD_NAMES = ["flood","earthquake","cyclone","heatwave","drought","landslide"];
 
@@ -132,7 +132,7 @@ async function generateBrief(site, code){
     meta:{tool:"openshelter-js", version:"0.2.0",
       hazard_source: usingReal ? "USGS + IBTrACS grids (eq/cy) + synthetic fields (flood/heat/drought/landslide)" : "synthetic demo field only",
       provenance: PROVENANCE,
-      note:"Earthquake & cyclone scores use real public-domain data. Other hazards are demo values — verify against authoritative national layers before building."},
+      note:"Earthquake & cyclone scores use real public-domain data. Other hazards are demo values - verify against authoritative national layers before building."},
     site:{...site, code:c.id},
     dominant_hazard:dom, exposure:exposureScore(hz),
     structural_system:structural,

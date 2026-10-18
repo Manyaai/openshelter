@@ -3,7 +3,7 @@
 The compliance layer is a *registry*, not a hard-coded rulebook: each
 jurisdiction's requirements are declarative JSON profiles that local
 authorities can maintain themselves (and that OpenShelter validates).
-This is what makes the project sustainable — the software stays generic,
+This is what makes the project sustainable - the software stays generic,
 the legal content belongs to (and is funded by) the public body that owns
 the code.
 
