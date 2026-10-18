@@ -33,13 +33,13 @@ def main() -> int:
                       "exposure": exposure_score(site),
                       "critical": len(brief.critical())})
     (outdir / "index.html").write_text(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Brief gallery — OpenShelter</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Brief gallery - OpenShelter</title>
 <style>body{{font-family:system-ui;margin:2rem auto;max-width:760px;color:#0e2a33;line-height:1.5;padding:0 1rem}}
 a{{color:#0f766e;font-weight:600}}table{{border-collapse:collapse;width:100%}}td,th{{border:1px solid #ddd;padding:.5rem .7rem;text-align:left}}
 tr:nth-child(even){{background:#fafaf7}}</style></head><body>
 <h1>📋 Sample design briefs</h1>
 <p>Real end-to-end outputs of OpenShelter v0.1 for five high-risk locations. Each brief is fully self-contained and printable.
-<em>Demo hazard field is synthetic — see <a href="../">the live demo</a>.</em></p>
+<em>Demo hazard field is synthetic - see <a href="../">the live demo</a>.</em></p>
 <table><tr><th>Location</th><th>Code profile</th><th>Dominant hazard</th><th>Exposure</th><th>Critical measures</th><th>Brief</th></tr>
 {"".join(f'<tr><td>{i["name"]}</td><td>{i["code"]}</td><td>{i["dominant_hazard"]}</td><td>{i["exposure"]}</td><td>{i["critical"]}</td><td><a href="{i["file"]}">open →</a></td></tr>' for i in index)}
 </table><p><a href="../">← back to OpenShelter home</a></p></body></html>""", encoding="utf-8")
