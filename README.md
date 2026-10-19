@@ -24,9 +24,12 @@ each measure, citing the exact hazard data and code clause behind it.
 ## See it in action
 
 ```bash
-pip install openshelter # (until published, see "Try it now" below)
+git clone https://github.com/Manyaai/openshelter.git && cd openshelter
+pip install -e .
 openshelter brief --lat 23.81 --lon 90.39 --code in-is139-is4352 --outdir out
 ```
+
+No install? Try the [live demo](https://manyaai.github.io/openshelter/demo/), it runs entirely in your browser.
 
 You get three files: a JSON report, a readable Markdown brief, and a printable
 HTML one-pager. Every recommendation looks like:

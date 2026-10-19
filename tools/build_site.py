@@ -21,19 +21,19 @@ NAV = [
     ("Live demo", "/demo/"),
     ("Example plans", "/briefs/"),
     ("Trust & data", "/trust/"),
-    ("Newsroom", "/news/"),
 ]
 CTA_NAV = ("Get involved", "/contribute/")  # rendered as the header action button
 FOOTER_EXTRA = [  # secondary pages reachable from the footer only
     ("Home", "index.html"),
     ("Mission", "mission/"),
+    ("Changelog", "news/"),
     ("Contribute", "contribute/"),
     ("GitHub", REPO := "https://github.com/Manyaai/openshelter"),
     ("Report an issue", REPO + "/issues/new"),
 ]
 ACTIVE_KEY = {  # page id -> nav label that should be marked active
     "home": None, "how": "How it works", "demo": "Live demo",
-    "briefs": "Example plans", "trust": "Trust & data", "news": "Newsroom",
+    "briefs": "Example plans", "trust": "Trust & data", "news": None,
     "mission": None, "contribute": None,
 }
 # pager order for prev/next navigation cards at the bottom of sub-pages
@@ -41,7 +41,7 @@ PAGER_ORDER = ["how", "demo", "briefs", "trust", "news", "mission", "contribute"
 PAGER_HREF = {"how": "how/", "demo": "demo/", "briefs": "briefs/", "trust": "trust/",
               "news": "news/", "mission": "mission/", "contribute": "contribute/"}
 PAGER_TITLE = {"how": "How it works", "demo": "Live demo", "briefs": "Example plans",
-               "trust": "Trust & data", "news": "Newsroom", "mission": "Mission",
+               "trust": "Trust & data", "news": "Changelog", "mission": "Mission",
                "contribute": "Get involved"}
 
 def rel(prefix: str, path: str) -> str:
@@ -72,7 +72,7 @@ FOOTER_COLS = """
     <nav class="f-col" aria-label="Project">
       <h4>Project</h4>
       <a href="{URL}mission/">Mission</a>
-      <a href="{URL}news/">Newsroom</a>
+      <a href="{URL}news/">Changelog</a>
       <a href="{URL}contribute/">Get involved</a>
       <a href="https://github.com/Manyaai/openshelter">GitHub</a>
       <a href="https://github.com/Manyaai/openshelter/issues/new">Report an issue</a>
@@ -108,11 +108,46 @@ def pager(page_id: str, p: str) -> str:
         cells.append(f'<a class="pg next" href="{p}{PAGER_HREF[next_id]}"><small>Next &rarr;</small><b>{PAGER_TITLE[next_id]}</b></a>')
     else:
         cells.append(f'<a class="pg next" href="{REPO}"><small>See the code</small><b>GitHub</b></a>')
-    return f'<nav class="pager" aria-label="Page navigation"><div class="wrap grid grid-2">{"".join(cells)}</div></nav>'
+    return _ext_attrs(f'<nav class="pager" aria-label="Page navigation"><div class="wrap grid grid-2">{"".join(cells)}</div></nav>')
 
+
+
+import re as _re
+_EXT = "https://"
+def _ext_attrs(html_fragment: str) -> str:
+    """Add rel="noopener" target="_blank" to external anchors."""
+    return _re.sub(
+        r'<a href="(https?://[^"]+)"',
+        r'<a href="\1" target="_blank" rel="noopener"',
+        html_fragment)
+
+
+def ld_jsonld(page_id: str, title: str, desc: str, canonical: str) -> str:
+    """Per-page schema.org JSON-LD for richer search results."""
+    page_types = {"how": "HowTo", "trust": "FAQPage",
+                  "mission": "AboutPage", "contribute": "ItemList"}
+    base = {"@context": "https://schema.org", "@type": "WebPage",
+            "name": title.split(",")[0], "description": desc, "url": canonical,
+            "isPartOf": {"@type": "WebSite", "name": "OpenShelter",
+                         "url": BASE + "/"}}
+    if page_id == "home":
+        base = {"@context": "https://schema.org", "@type": "SoftwareApplication",
+                "name": "OpenShelter", "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+                "description": desc,
+                "codeRepository": REPO,
+                "license": "https://spdx.org/licenses/AGPL-3.0-or-later.html",
+                "url": canonical}
+    elif page_id in ("briefs", "demo"):
+        base["@type"] = {"briefs": "CollectionPage", "demo": "WebApplication"}[page_id]
+    elif page_id in page_types:
+        base["@type"] = page_types[page_id]
+    return "<script type=\"application/ld+json\">" + json.dumps(base, separators=(",", ":")) + "</script>"
 
 def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
            canonical: str, extra_head: str = "", scripts: str = "") -> str:
+    ldjson = ld_jsonld(page_id, title, desc, canonical)
     p = prefix  # e.g. "" for root, "../" for /how/
     nav_html = "\n    ".join(
         f'<a href="{p}{href if not href.startswith("/") else href.lstrip("/")}"'
@@ -121,7 +156,7 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
         for lbl, href in NAV)
     cta_href = CTA_NAV[1].lstrip("/")
     nav_html += f'\n    <a class="btn-nav" href="{p}{cta_href}">{CTA_NAV[0]}</a>'
-    footer = FOOTER_COLS.replace("{URL}", p)
+    footer = _ext_attrs(FOOTER_COLS.replace("{URL}", p))
     ogimg = canonical.rstrip("/").rsplit("/", 1)[0] + "/og-image.png" if False else f"{p}og-image.png"
     return f"""<!doctype html>
 <html lang="en">
@@ -147,6 +182,7 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 <link rel="stylesheet" href="{p}css/style.css">
 <link rel="stylesheet" href="{p}css/dark.css">
 {extra_head}
+{ldjson}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -480,7 +516,7 @@ def news_body(p: str) -> str:
         posts.append(f'''<article class="card tile post"><div class="post-meta"><time>{n["date"]}</time><span class="badge info">{n["tag"]}</span></div><h3>{n["title"]}</h3><p>{n["body"]}</p></article>''')
     return f"""
 <section class="page-head"><div class="wrap measure-narrow">
-  <span class="kicker">Newsroom</span><h1>What changed, and when</h1>
+  <span class="kicker">Changelog</span><h1>What changed, and when</h1>
   <p class="lead">A running log of releases, data upgrades and community milestones. Plain dates, no marketing gloss, because auditors and grant reviewers read changelogs.</p>
 </div></section>
 <section class="tight"><div class="wrap measure-wide grid grid-1">
@@ -544,7 +580,7 @@ def build_404():
       <a class="btn" href="/openshelter/demo/">Live demo</a>
       <a class="btn" href="/openshelter/briefs/">Example plans</a>
       <a class="btn" href="/openshelter/trust/">Trust &amp; data</a>
-      <a class="btn" href="/openshelter/news/">Newsroom</a>
+      <a class="btn" href="/openshelter/news/">Changelog</a>
       <a class="btn" href="/openshelter/contribute/">Get involved</a>
     </nav>
     <p class="nf-note">Something broken? <a href="https://github.com/Manyaai/openshelter/issues/new">Tell us on GitHub</a>.</p>
@@ -552,7 +588,7 @@ def build_404():
 </main>
 </body>
 </html>"""
-    w("404.html", page)
+    w("404.html", _ext_attrs(page))
 
 
 def main():
@@ -561,7 +597,7 @@ def main():
         "OpenShelter, open-source multi-hazard shelter design advisor",
         "Free, auditable tool turning public hazard data + real building codes into plain-language shelter design briefs. Try the live demo, runs in your browser, nothing uploaded.",
         "", HERO + DEMO + HOME_TEASERS, BASE + "/",
-        extra_head='<link rel="stylesheet" href="css/vendor/leaflet/leaflet.css">\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"OpenShelter","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Open-source multi-hazard resilient shelter design advisor producing auditable, code-cited shelter design briefs.","codeRepository":"https://github.com/Manyaai/openshelter","license":"https://spdx.org/licenses/AGPL-3.0-or-later.html"}</script>',
+        extra_head='<link rel="stylesheet" href="css/vendor/leaflet/leaflet.css">\n',
         scripts='<script src="js/leaflet.js"></script>\n<script src="briefgen.js"></script>\n<script src="js/demo.js"></script>')
     w("index.html", home)
 
@@ -598,7 +634,7 @@ def main():
 
     # NEWSROOM
     w("news/index.html", layout("news",
-        "Newsroom & changelog, OpenShelter",
+        "Changelog, OpenShelter",
         "Release notes, data upgrades and community milestones, plus the public roadmap for OpenShelter.",
         "../", news_body("../"), BASE + "/news/"))
 
