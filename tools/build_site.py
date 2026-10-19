@@ -14,26 +14,35 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 
 # ---------------------------------------------------------------- shared chrome
+# Header shows ONLY what a visitor needs at decision height (5 tabs + CTA).
+# Everything else lives in the footer navigation below.
 NAV = [
-    ("Home", "/index.html"),
     ("How it works", "/how/"),
     ("Live demo", "/demo/"),
     ("Example plans", "/briefs/"),
     ("Trust & data", "/trust/"),
     ("Newsroom", "/news/"),
-    ("Mission", "/mission/"),
-    ("Get involved", "/contribute/"),
+]
+CTA_NAV = ("Get involved", "/contribute/")  # rendered as the header action button
+FOOTER_EXTRA = [  # secondary pages reachable from the footer only
+    ("Home", "index.html"),
+    ("Mission", "mission/"),
+    ("Contribute", "contribute/"),
+    ("GitHub", REPO := "https://github.com/Manyaai/openshelter"),
+    ("Report an issue", REPO + "/issues/new"),
 ]
 ACTIVE_KEY = {  # page id -> nav label that should be marked active
-    "home": "Home", "how": "How it works", "demo": "Live demo",
+    "home": None, "how": "How it works", "demo": "Live demo",
     "briefs": "Example plans", "trust": "Trust & data", "news": "Newsroom",
-    "mission": "Mission", "contribute": "Get involved",
+    "mission": None, "contribute": None,
 }
 # pager order for prev/next navigation cards at the bottom of sub-pages
 PAGER_ORDER = ["how", "demo", "briefs", "trust", "news", "mission", "contribute"]
 PAGER_HREF = {"how": "how/", "demo": "demo/", "briefs": "briefs/", "trust": "trust/",
               "news": "news/", "mission": "mission/", "contribute": "contribute/"}
-PAGER_TITLE = {k: lbl for k, lbl in zip(PAGER_ORDER, [l for l, _ in NAV[1:]])}
+PAGER_TITLE = {"how": "How it works", "demo": "Live demo", "briefs": "Example plans",
+               "trust": "Trust & data", "news": "Newsroom", "mission": "Mission",
+               "contribute": "Get involved"}
 
 def rel(prefix: str, path: str) -> str:
     """Resolve an absolute site path relative to a page directory prefix."""
@@ -42,18 +51,33 @@ def rel(prefix: str, path: str) -> str:
     depth = prefix.rstrip("/").count("/") + 1
     return "../" * depth + path.lstrip("./")
 
-# Minimal footer: one brand line + links that duplicate the nav (for pages
-# reached without JS or from search engines) + GitHub. No badge images, no
-# governance column (that content lives on the Trust page), no duplicates.
+# Footer carries the full site map: primary pages (matching header labels)
+# plus secondary pages only reachable here. No badge images, no duplicates.
+# Standard three-column footer: brand block + two navigation groups.
+# Everything a visitor might want but doesn't need at header height lives here.
 FOOTER_COLS = """
-    <div class="f-brand"><a class="f-name" href="{URL}index.html">OpenShelter</a>
-      <p class="f-tag">Free, open-source tool for safer emergency shelters. AGPL-3.0 licensed.</p></div>
-    <nav class="f-links" aria-label="Footer">
+  <div class="f-grid">
+    <div class="f-brand">
+      <a class="f-name" href="{URL}index.html">OpenShelter</a>
+      <p class="f-tag">Free, open-source tool that turns public hazard data and building codes into plain-language shelter design briefs.</p>
+      <p class="f-meta">AGPL-3.0 licensed · Built with open data (USGS, NOAA)</p>
+    </div>
+    <nav class="f-col" aria-label="Explore">
+      <h4>Explore</h4>
       <a href="{URL}how/">How it works</a>
+      <a href="{URL}demo/">Live demo</a>
+      <a href="{URL}briefs/">Example plans</a>
       <a href="{URL}trust/">Trust &amp; data</a>
+    </nav>
+    <nav class="f-col" aria-label="Project">
+      <h4>Project</h4>
+      <a href="{URL}mission/">Mission</a>
+      <a href="{URL}news/">Newsroom</a>
       <a href="{URL}contribute/">Get involved</a>
       <a href="https://github.com/Manyaai/openshelter">GitHub</a>
+      <a href="https://github.com/Manyaai/openshelter/issues/new">Report an issue</a>
     </nav>
+  </div>
 """
 
 REPO = "https://github.com/Manyaai/openshelter"
@@ -62,7 +86,7 @@ def crumbs(page_id: str, p: str) -> str:
     """Breadcrumb trail for sub-pages (Home / <current section>)."""
     if page_id == "home":
         return ""
-    label = ACTIVE_KEY.get(page_id, page_id.title())
+    label = PAGER_TITLE.get(page_id, page_id.title())
     return (f'<nav class="crumbs" aria-label="Breadcrumb"><div class="wrap">'
             f'<a href="{p}index.html">Home</a><span aria-hidden="true">/</span>'
             f'<span aria-current="page">{label}</span></div></nav>')
@@ -95,6 +119,8 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
         + (' class="active" aria-current="page"' if lbl == ACTIVE_KEY[page_id] else "")
         + f">{lbl}</a>"
         for lbl, href in NAV)
+    cta_href = CTA_NAV[1].lstrip("/")
+    nav_html += f'\n    <a class="btn-nav" href="{p}{cta_href}">{CTA_NAV[0]}</a>'
     footer = FOOTER_COLS.replace("{URL}", p)
     ogimg = canonical.rstrip("/").rsplit("/", 1)[0] + "/og-image.png" if False else f"{p}og-image.png"
     return f"""<!doctype html>
@@ -129,8 +155,7 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
   <nav class="nav" aria-label="Main navigation">
     {nav_html}
-    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
-    <a class="btn-nav" href="{REPO}">GitHub</a></span>
+    <span class="nav-tools"><button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button></span>
   </nav>
 </div></header>
 {crumbs(page_id, p)}
@@ -139,8 +164,7 @@ def layout(page_id: str, title: str, desc: str, prefix: str, body: str,
 {pager(page_id, p)}
 </main>
 <footer class="site"><div class="wrap">
-  <div class="f-row">{footer}</div>
-  <div class="fine">© OpenShelter contributors · Not a substitute for a licensed structural engineer</div>
+{footer}  <div class="fine">© <span class="year">2026</span> OpenShelter contributors · Not a substitute for a licensed structural engineer</div>
 </div></footer>
 <button class="totop" aria-label="Back to top">↑</button>
 <script src="{p}js/ui.js"></script>
@@ -158,22 +182,21 @@ HERO = """
     <a class="btn btn-primary" href="demo/">Try the live demo →</a>
     <a class="btn btn-outline" href="briefs/">See example briefs</a>
   </div>
+  <div class="hero-stats">
+    <div class="hs"><b>5</b><span>building-code profiles shipped</span></div>
+    <div class="hs"><b>2</b><span>real public hazard datasets wired in</span></div>
+    <div class="hs"><b>100%</b><span>open source, diffable in git</span></div>
+    <div class="hs"><b>$0</b><span>free for governments &amp; classrooms</span></div>
+  </div>
   <div class="trust-row">
-    <span class="pill">🔒 Runs in your browser, nothing uploaded</span>
-    <span class="pill">📜 Every rule cites its code clause</span>
-    <span class="pill">🧮 Deterministic, same input, same brief, forever</span>
-    <span class="pill">📶 Works offline on a field laptop</span>
+    <span class="pill"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Runs in your browser, nothing uploaded</span>
+    <span class="pill"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg>Every rule cites its code clause</span>
+    <span class="pill"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>Deterministic: same input, same brief, forever</span>
+    <span class="pill"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12a7 7 0 0 1 14 0"/><path d="M8.5 15a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="18.5" r="1"/><path d="M3 3l18 18"/></svg>Works offline on a field laptop</span>
   </div>
   <div class="hero-map" id="hzmap" role="img" aria-label="World map of famous high-risk sites; click any marker to generate a brief"></div>
   <p class="map-note" id="maphint" style="display:none">Click a glowing marker, or anywhere on the map, to generate that site's design brief instantly.</p>
 </div></section>
-
-<div class="stats"><div class="wrap"><div class="grid">
-  <div class="stat"><b>5</b><span>building-code profiles shipped (EU · US · India · Philippines · Sphere)</span></div>
-  <div class="stat"><b>2</b><span>real public-domain hazard datasets wired in (USGS, NOAA)</span></div>
-  <div class="stat"><b>100%</b><span>open source, inspectable JSON rules, diffable in git</span></div>
-  <div class="stat"><b>$0</b><span>forever free for governments, NGOs and classrooms</span></div>
-</div></div></div>
 """
 
 DEMO = """
@@ -302,9 +325,9 @@ TRUST_BODY = """
 <section class="tight reveal"><div class="wrap measure">
   <div class="sec-head"><span class="kicker">Alignment</span><h2>Frameworks this project supports</h2></div>
   <div class="grid grid-3">
-    <div class="card tile"><h3>🌐 Sendai Framework</h3><p>Target E: increase national DRR strategies. OpenShelter turns a country's own hazard data and codes into implementable shelter requirements.</p></div>
-    <div class="card tile"><h3>🇪🇺 EU open-source doctrine</h3><p>Federal Source Code Policy-style reuse, "public code" procurement preferences, Horizon Europe digital-public-infrastructure calls.</p></div>
-    <div class="card tile"><h3>🤝 Sphere &amp; CHS</h3><p>Humanitarian standards encoded directly: shelter space per person, WASH ratios, and accessibility checks ship in the default profile.</p></div>
+    <div class="card tile"><h3>Sendai Framework</h3><p>Target E: increase national DRR strategies. OpenShelter turns a country's own hazard data and codes into implementable shelter requirements.</p></div>
+    <div class="card tile"><h3>EU open-source doctrine</h3><p>Federal Source Code Policy-style reuse, "public code" procurement preferences, Horizon Europe digital-public-infrastructure calls.</p></div>
+    <div class="card tile"><h3>Sphere &amp; CHS</h3><p>Humanitarian standards encoded directly: shelter space per person, WASH ratios, and accessibility checks ship in the default profile.</p></div>
   </div>
   <p style="margin-top:var(--s3)"><a class="btn btn-outline btn-sm" href="https://github.com/Manyaai/openshelter/blob/main/docs/STANDARDS.md">Full standards mapping →</a></p>
 </div></section>

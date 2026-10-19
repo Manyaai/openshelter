@@ -50,7 +50,7 @@ a{color:var(--brand)}
 
 /* ---------- header ---------- */
 .site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.site-header .wrap{display:flex;align-items:center;gap:.9rem;padding-top:.7rem;padding-bottom:.7rem}
+.site-header .wrap{display:flex;align-items:center;flex-wrap:wrap;gap:1.1rem;padding-top:.7rem;padding-bottom:.7rem;min-height:60px}
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--ink)}
 .brand img{height:42px;width:42px;border-radius:10px}
 .brand b{font-size:1.2rem;letter-spacing:-.01em;display:block;line-height:1.1}
@@ -242,11 +242,18 @@ ul.checks li:last-child{border-bottom:0}
 ul.checks li::before{content:"✓";position:absolute;left:.2rem;color:var(--brand);font-weight:800}
 .lvl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;border-radius:99px;padding:.18rem .7rem;margin-bottom:.55rem}
 .lvl.easy{background:var(--ok-bg);color:var(--ok)} .lvl.mid{background:var(--warn-bg);color:var(--warn)} .lvl.hard{background:var(--info-bg);color:var(--info)}
-footer.site .f-tag{margin:.35rem 0 0;color:var(--footer-fg)}
-footer.site .f-row{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);align-items:baseline;justify-content:space-between}
-footer.site .f-name{font-weight:800;font-size:1.05rem;color:var(--footer-head);display:inline-block;padding:0}
-footer.site .f-links{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4)}
-footer.site .f-links a{display:inline;padding:0}
+/* structured three-column footer: brand | Explore | Project */
+footer.site .f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--s4) var(--s5);text-align:left;align-items:start}
+footer.site .f-brand{max-width:34ch}
+footer.site .f-name{font-family:var(--font-display);font-weight:700;font-size:1.2rem;color:var(--footer-head);display:inline-block;padding:0;text-decoration:none}
+footer.site .f-name:hover{text-decoration:none;color:var(--footer-link)}
+footer.site .f-tag{margin:.5rem 0 0;color:var(--footer-fg);font-size:.9rem;line-height:1.55}
+footer.site .f-meta{margin:.6rem 0 0;color:var(--footer-fg);opacity:.75;font-size:.8rem}
+footer.site .f-col h4{margin:0 0 .55rem;font-size:.78rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--footer-head);opacity:.85}
+footer.site .f-col a{display:block;padding:.22rem 0;color:var(--footer-link);text-decoration:none;font-size:.9rem}
+footer.site .f-col a:hover{text-decoration:underline}
+@media(max-width:820px){footer.site .f-grid{grid-template-columns:1fr 1fr}footer.site .f-brand{grid-column:1/-1}}
+@media(max-width:520px){footer.site .f-grid{grid-template-columns:1fr}}
 main.doc{padding-top:0}
 
 /* ---------- sitebar on printable briefs ---------- */
@@ -287,6 +294,20 @@ footer.site{margin-top:var(--s4);padding:var(--s3) 0 var(--s2)}
 .badge.info{background:var(--info-bg);color:var(--info)}
 .post h3{margin:.1rem 0 .4rem;font-family:var(--font-display);font-size:1.3rem}
 @media(max-width:820px){.pager .grid-2{grid-template-columns:1fr}.pager .next{text-align:left}}
+
+/* ---------- hero stats (replaces the old full-width band) ---------- */
+.hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin-top:var(--s3)}
+.hero-stats .hs{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:.7rem .9rem}
+.hero-stats .hs b{display:block;font-family:var(--font-display);font-size:1.5rem;line-height:1.1;color:var(--brand-deep)}
+.hero-stats .hs span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
+@media(max-width:820px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+/* ---------- v6: header/footer structure & motion ---------- */
+.site-header .wrap{transition:padding .25s ease}
+.site-header.shrunk .wrap{padding-top:.4rem;padding-bottom:.4rem;min-height:48px}
+.site-header.shrunk .brand small{opacity:0;max-height:0;margin:0;transition:all .25s ease}
+.brand small{display:block;font-size:.72rem;color:var(--ink-soft);line-height:1.2;transition:all .25s ease}
+/* active tab underline indicator (stronger hierarchy cue than color alone) */
+.nav a.active{color:var(--brand);border-bottom-color:var(--brand);font-weight:700}
 
 /* OpenShelter dark mode - respects OS preference, toggle via [data-theme] on <html> */
 :root[data-theme="dark"]{

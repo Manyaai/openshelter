@@ -50,3 +50,15 @@
  t.setAttribute('aria-expanded', open ? 'true' : 'false');
  });
 })();
+
+/* v6: sticky header shrink, footer year, mobile drawer close-on-navigate */
+(function(){
+ const h = document.querySelector('.site-header');
+ if (h) { const f = () => h.classList.toggle('shrunk', scrollY > 40);
+   addEventListener('scroll', f, {passive:true}); f(); }
+ document.querySelectorAll('.year').forEach(y => y.textContent = new Date().getFullYear());
+ const n = document.querySelector('.nav'), t = document.querySelector('.nav-toggle');
+ if (n && t) n.addEventListener('click', e => {
+   if (e.target.closest('a')) { n.classList.remove('open'); t.setAttribute('aria-expanded','false'); }
+ });
+})();
