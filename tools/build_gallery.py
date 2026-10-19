@@ -37,7 +37,7 @@ def main() -> int:
 <style>body{{font-family:system-ui;margin:2rem auto;max-width:760px;color:#0e2a33;line-height:1.5;padding:0 1rem}}
 a{{color:#0f766e;font-weight:600}}table{{border-collapse:collapse;width:100%}}td,th{{border:1px solid #ddd;padding:.5rem .7rem;text-align:left}}
 tr:nth-child(even){{background:#fafaf7}}</style></head><body>
-<h1>📋 Sample design briefs</h1>
+<h1>Sample design briefs</h1>
 <p>Real end-to-end outputs of OpenShelter v0.1 for five high-risk locations. Each brief is fully self-contained and printable.
 <em>Demo hazard field is synthetic - see <a href="../">the live demo</a>.</em></p>
 <table><tr><th>Location</th><th>Code profile</th><th>Dominant hazard</th><th>Exposure</th><th>Critical measures</th><th>Brief</th></tr>

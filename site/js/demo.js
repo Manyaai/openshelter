@@ -4,8 +4,8 @@
  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
  const ok = await loadHazardGrids();
  $('datastatus').innerHTML = ok
- ? '✅ Earthquake &amp; storm scores are computed live from <b>real public records</b> (USGS earthquake catalogue + NOAA storm history).'
- : '⚠️ Map data not loaded, showing clearly-marked sample values instead.';
+ ? "<b class='ok'>Real data:</b> Earthquake &amp; storm scores are computed live from <b>real public records</b> (USGS earthquake catalogue + NOAA storm history)." 
+ : 'Map data not loaded, showing clearly-marked sample values instead.';
 
  /* ---- interactive hazard map (progressive enhancement) ---- */
  let mapMarker = null;
@@ -66,16 +66,16 @@
  <div class="result-head"><h3>Safety plan. ${lat.toFixed(2)}, ${lon.toFixed(2)}</h3>
  <span class="badge p1">biggest risk: ${HZ_LABEL[b.dominant_hazard] || esc(b.dominant_hazard)}</span>
  <span class="badge p3">overall exposure: ${expWord}</span></div>
- <p class="prov">🔎 Where the numbers come from: ${esc(b.meta.hazard_source)} · rulebook: ${esc(b.meta.code_profile)} · tool version ${esc(b.meta.engine_version || '0.2')}, type the same details again and you'll always get this exact plan.</p>
+ <p class="prov">Where the numbers come from: ${esc(b.meta.hazard_source)} · rulebook: ${esc(b.meta.code_profile)} · tool version ${esc(b.meta.engine_version || '0.2')}, type the same details again and you'll always get this exact plan.</p>
  <p><b>Suggested build type:</b> ${esc(b.structural_system)}</p>
  <p style="font-size:.9rem;margin-bottom:.2rem"><b>Danger levels at this spot (0-100)</b></p>
  ${hzBars(site.hazards)}
- <p>${b.compliance_checks.map(c => `<span class="badge ${c.status === 'PASS' ? 'pass' : c.status === 'NOT-APPLICABLE' ? 'p3' : 'review'}" title="${esc(c.description || '')}">${esc(c.id)}: ${c.status === 'PASS' ? '✓ passes' : c.status === 'REVIEW' ? '! needs review' : ' - n/a'}</span>`).join(' ')}</p>
+ <p>${b.compliance_checks.map(c => `<span class="badge ${c.status === 'PASS' ? 'pass' : c.status === 'NOT-APPLICABLE' ? 'p3' : 'review'}" title="${esc(c.description || '')}">${esc(c.id)}: ${c.status === 'PASS' ? 'Passes' : c.status === 'REVIEW' ? '! needs review' : ' - n/a'}</span>`).join(' ')}</p>
  <ul class="recs">${b.recommendations.map(r => `<li><span class="badge p${r.priority}">${PRI_LABEL[r.priority] || ('P' + r.priority)}</span><b>${esc(r.measure)}</b><em>Why: ${esc(r.reason)}</em></li>`).join('')}</ul>
  <p style="display:flex;gap:.6rem;flex-wrap:wrap">
- <button class="go" style="width:auto;padding:.6rem 1.4rem" onclick="window.print()">🖨 Print / save as PDF</button>
- <a class="btn btn-outline btn-sm" href="${share}" rel="noopener">🔗 Copy share link</a>
- <button class="btn btn-outline btn-sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${share}');this.textContent='✓ Link copied'">⧉ Share this plan</button>
+ <button class="go" style="width:auto;padding:.6rem 1.4rem" onclick="window.print()">Print / save as PDF</button>
+ <a class="btn btn-outline btn-sm" href="${share}" rel="noopener">Copy share link</a>
+ <button class="btn btn-outline btn-sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${share}');this.textContent='Link copied'">Share this plan</button>
  </p>`;
  } catch (err) { out.innerHTML = `<p style="color:var(--bad)">Error: ${esc(err.message)}</p>`; }
  });
