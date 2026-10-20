@@ -1,8 +1,37 @@
-name: Sync workspace changes
+name: Sync from workspace
+
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to sync into'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: write
+
 jobs:
-  ping:
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Secret is wired correctly if this run shows green."
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
+
+      - name: Download bundle artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openshelter-sync-bundle
+
+      - name: Merge bundle and push
+        run: |
+          git config user.name "openshelter-sync[bot]"
+          git config user.email "50921564+openshelter-sync[bot]@users.noreply.github.com"
+          git fetch .syncbundle main || true
+          git bundle verify openshelter-sync.bundle
+          git fetch openshelter-sync.bundle main:syncbranch
+          git merge --no-edit syncbranch
+          git push origin HEAD:${{ github.event.inputs.branch }}
